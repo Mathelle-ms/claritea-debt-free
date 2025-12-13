@@ -8,7 +8,7 @@
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #212529; line-height: 1.6; }
     .container { max-width: 900px; margin: 0 auto; padding: 0 1rem; }
     
-    /* Animated Banner with Multiple Waves */
+    /* Banner with Single Wave */
     .banner {
       background: linear-gradient(rgba(30, 64, 175, 0.85), rgba(30, 64, 175, 0.85)), 
                   url('https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=1200&h=400&fit=crop');
@@ -18,17 +18,15 @@
       animation: bannerSlide 1s ease-out;
     }
     
-    /* Multiple Horizontal Waves */
+    /* Single Wave at Bottom */
     .wave {
       position: absolute;
       bottom: 0; left: 0;
-      width: 200%; height: 40px;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 60"><path fill="%23ffffff" fill-opacity="0.2" d="M0,30 C200,0 400,60 600,30 C800,0 1000,60 1200,30 L1200,60 L0,60 Z"></path></svg>');
-      background-size: 600px 60px;
+      width: 200%; height: 70px;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 70"><path fill="%23ffffff" fill-opacity="0.35" d="M0,35 C200,0 400,70 600,35 C800,0 1000,70 1200,35 L1200,70 L0,70 Z"></path></svg>');
+      background-size: 600px 70px;
+      animation: waveMove 8s linear infinite;
     }
-    .wave1 { animation: waveMove 6s linear infinite; height: 40px; }
-    .wave2 { animation: waveMove 8s linear infinite reverse; height: 30px; opacity: 0.5; }
-    .wave3 { animation: waveMove 10s linear infinite; height: 20px; opacity: 0.3; }
     
     @keyframes waveMove {
       0% { transform: translateX(0); }
@@ -124,13 +122,11 @@
   </style>
 </head>
 <body>
-  <!-- Animated Banner with Multiple Waves -->
+  <!-- Animated Banner with Single Wave -->
   <div class="banner">
-    <div class="wave wave1"></div>
-    <div class="wave wave2"></div>
-    <div class="wave wave3"></div>
+    <div class="wave"></div>
     <h1>Claritea Debt Free <span id="animated-text">Calculator</span></h1>
-    <p>Add your debts below and discover your exact debt-free date with two proven payoff strategies.</p>
+    <p>See exactly when you’ll be debt-free. No signup. No credit score needed</p>
   </div>
 
   <div class="container">
@@ -151,9 +147,11 @@
           <option value="Student Loan">Student Loan</option>
           <option value="Credit Card">Credit Card</option>
           <option value="Other Debt">Other Debt</option>
+          <option value="Home Mortgage">Home Mortgage</option>
         </select>
       </div>
 
+      <!-- Balance -->
       <div class="form-group">
         <label>
           Balance Owed 
@@ -164,6 +162,7 @@
         <input id="balance" type="number" placeholder="e.g., 5000">
       </div>
 
+      <!-- APR -->
       <div class="form-group">
         <label>
           Interest Rate (APR) 
@@ -174,6 +173,7 @@
         <input id="apr" type="number" step="0.01" placeholder="e.g., 18.99">
       </div>
 
+      <!-- Min Payment -->
       <div class="form-group">
         <label>
           Minimum Payment 
@@ -184,6 +184,7 @@
         <input id="min-payment" type="number" placeholder="e.g., 100">
       </div>
 
+      <!-- Extra Payment -->
       <div class="form-group">
         <label>
           Extra Monthly Payment (Optional) 
@@ -234,158 +235,170 @@
     <!-- Educational Content: What Is Debt Snowball -->
     <div class="edu-section">
       <h2>What Is the Debt Snowball?</h2>
-      <p>The debt snowball is a debt payoff method where you pay your debts from smallest to largest, regardless of interest rate. Knock out the smallest debt first. Then, take what you were paying on that debt and add it to the payment of your next smallest debt.</p>
+      <p>The debt snowball is a simple way to pay off debt by focusing on balances, not interest rates.</p>
       
-      <p><strong>Why a snowball?</strong> Because just like a snowball rolling downhill, paying off debt is all about momentum. With every debt you pay off, you gain speed until you’re an unstoppable, debt-crushing force.</p>
+      <p>You start with your smallest debt and attack it aggressively. Once it’s gone, you roll that payment into the next smallest debt. Every payoff frees up more money, which speeds up the next one.</p>
       
-      <h3>Here's how the debt snowball works:</h3>
+      <p><strong>Why is it called a snowball?</strong> Because progress creates momentum. Each debt you eliminate makes the next one easier—and faster—to knock out.</p>
+      
+      <h3>Here’s how the debt snowball works:</h3>
       <ul>
-        <li><strong>Step 1:</strong> List your debts from smallest to largest regardless of interest rate.</li>
-        <li><strong>Step 2:</strong> Make minimum payments on all your debts except the smallest.</li>
-        <li><strong>Step 3:</strong> Pay as much as possible on your smallest debt.</li>
-        <li><strong>Step 4:</strong> Repeat until each debt is paid in full.</li>
+        <li><strong>Step 1:</strong> List all your debts from smallest balance to largest.</li>
+        <li><strong>Step 2:</strong> Make minimum payments on everything except the smallest debt.</li>
+        <li><strong>Step 3:</strong> Put every extra dollar you can toward the smallest debt.</li>
+        <li><strong>Step 4:</strong> Repeat the process until every debt is paid off.</li>
       </ul>
       
-      <p><strong>What happens then?</strong> Freedom. No more payments. No more answering to collectors. No more watching your paychecks disappear. Because when you get hyper-focused and start chucking every dollar you can at your debt, you'll see how much faster you can pay it all off. Sorry, minimum payments. You're just not good enough.</p>
+      <p><strong>The result?</strong> Fewer payments. More control. Real progress you can actually feel.</p>
     </div>
 
     <!-- Debt Snowball vs Avalanche -->
     <div class="edu-section">
       <h2>Debt Snowball vs. Debt Avalanche</h2>
-      <p>Maybe you’ve heard of another way to pay off debt—the debt avalanche. Sounds epic, right? Wrong. With the debt avalanche, you pay your debts in order from the highest interest rate to the lowest, regardless of the balance.</p>
+      <p>You may have heard of the debt avalanche. That method tells you to pay off debts by highest interest rate first, no matter the balance.</p>
       
-      <p><strong>That might sound like smart math. Here’s why it's not:</strong> Debt isn’t a math problem. It’s a behavior problem.</p>
+      <p>On paper, that sounds smart.<br>In real life, it often fails.</p>
       
-      <p>If you want to change your behavior and get out of debt, you need to stay motivated. With the debt avalanche, you may not see progress on your first debt for a long time. That’s motivating nobody. You’re way more likely to lose steam and give up.</p>
+      <p><strong>Why?</strong> Because debt isn’t just math—it’s behavior.</p>
       
-      <p>But when you use the debt snowball, you get quick wins sooner. Crush the first debt fast. Boom. On to the next. Now, you’re cooking. Suddenly, you start believing that getting out of debt is within reach. <strong>Motivation is the key to becoming debt-free, not math.</strong></p>
+      <p>With the avalanche, your first win can take months or even years. No visible progress means motivation drops, and most people quit.</p>
+      
+      <p>The debt snowball works because it delivers quick wins. You see balances disappear sooner, which builds confidence and keeps you moving forward. <strong>Momentum beats perfect math every time.</strong></p>
     </div>
 
-    <!-- Simplified Debt Terms -->
+    <!-- Debt Terms Explained -->
     <div class="edu-section">
       <h2>Debt Terms Explained (Simple!)</h2>
-      <p>Debt terminology can be confusing and overly complicated—but it doesn’t have to be! Let’s break these down in a way you can actually understand.</p>
+      <p>Debt doesn’t have to sound complicated. Here’s what these terms actually mean.</p>
       
       <div class="term-box">
         <h4>Minimum Payment</h4>
-        <p>This is the lowest amount you are required to pay on a debt every month (includes principal and interest). Pay any less and you might get slapped with some hefty penalties.</p>
+        <p>The smallest amount your lender requires each month.</p>
+        <p>Pay less, and you’ll face fees or penalties.</p>
+        <p>Pay only the minimum, and debt sticks around far longer than it should.</p>
       </div>
 
       <div class="term-box">
         <h4>Balance</h4>
-        <p>It's the amount you still have to pay on your debt. If your original loan was $20,000 and you’ve paid $5,000 already, your balance would be $15,000.</p>
+        <p>The amount you still owe.</p>
+        <p>If you borrowed $25,000 and paid back $10,000, your balance is $15,000.</p>
       </div>
 
       <div class="term-box">
         <h4>Interest Rate</h4>
-        <p>When it comes to borrowing money, there’s no such thing as free. Lenders are interested in letting you borrow their money because they make money on what they loan you. Your interest rate is how much they charge, usually shown as a percentage of the principal balance.</p>
+        <p>The cost of borrowing money.</p>
+        <p>It’s the percentage lenders charge you for the loan—how they make their money.</p>
       </div>
 
       <div class="term-box">
         <h4>Principal</h4>
-        <p>No, it's not that elementary school principal you were terrified of as a kid. We’re talking about the amount of money you borrowed without the interest added. So, if you borrowed $20,000 over 10 years, your principal payment would be about $167 per month.</p>
+        <p>The original amount you borrowed, before interest.</p>
+        <p>When you pay down the principal, your debt actually shrinks.</p>
       </div>
 
       <div class="term-box">
         <h4>Nonmortgage Debt</h4>
-        <p>This one is simple. It’s everything you owe, except for loans related to the purchase of your home. Yes, that includes your car notes and student loans. It’s all debt. Why don’t we ask you to list your mortgage in your debt snowball? Because after you’ve knocked out your consumer debt, you’ve got other important steps to take before tackling the house.</p>
+        <p>All debt except your home loan.</p>
+        <p>Credit cards, car loans, student loans—this is the debt you focus on first.</p>
       </div>
 
       <div class="term-box">
         <h4>Debt-Free Date</h4>
-        <p>It's the day when every single cent of your consumer debt is history. Bye, credit cards. See you never, student loans. If you’ve got a mortgage, you’ll hit that hard later. But for now, it’s time to celebrate.</p>
+        <p>The day your consumer debt hits zero.</p>
+        <p>No credit card balances. No student loans. No car payments.</p>
+        <p>Just your income—fully working for you.</p>
       </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2 "></script>
-    <script>
-      // Yellow animated text in headline
-      const phrases = ['Calculator', 'Strategy', 'Timeline'];
-      let currentIndex = 0;
-      const animatedText = document.getElementById('animated-text');
-      
-      setInterval(() => {
-        currentIndex = (currentIndex + 1) % phrases.length;
-        animatedText.textContent = phrases[currentIndex];
-      }, 3000);
-      
-      // Supabase functions
-      const supabaseClient = supabase.createClient('https://gqgpjneoobcopymsvohx.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxZ3BqbmVvb2Jjb3B5bXN2b2h4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1ODE2NzgsImV4cCI6MjA4MTE1NzY3OH0.j_URS7960PNFOrcDNaP-C3dxzXbCsPW1AfOmncV5A68');
-      
-      async function addDebt() {
-        const debt = {
-          type: document.getElementById('debt-type').value,
-          balance: parseFloat(document.getElementById('balance').value),
-          apr: parseFloat(document.getElementById('apr').value),
-          min_payment: parseFloat(document.getElementById('min-payment').value),
-          extra_payment: parseFloat(document.getElementById('extra-payment').value) || 0
-        };
-        await supabaseClient.from('debts').insert([debt]);
-        loadDebts();
-      }
-      
-      async function loadDebts() {
-        const { data } = await supabaseClient.from('debts').select('*');
-        const list = document.getElementById('debt-list');
-        const debtsDiv = document.getElementById('debts');
-        if (data && data.length) {
-          list.classList.remove('hidden');
-          debtsDiv.innerHTML = data.map(d => `
-            <div class="debt-item">
-              <span>${d.type}: $${d.balance.toFixed(2)} at ${d.apr}%</span>
-              <button class="btn-delete" onclick="deleteDebt(${d.id})">Delete</button>
-            </div>
-          `).join('');
-        }
-      }
-      
-      async function deleteDebt(id) {
-        await supabaseClient.from('debts').delete().eq('id', id);
-        loadDebts();
-      }
-      
-      async function calculate() {
-        const { data: debts } = await supabaseClient.from('debts').select('*');
-        if (!debts || !debts.length) return alert('Please add at least one debt first.');
-        
-        const snowball = simulate([...debts].sort((a,b) => a.balance - b.balance));
-        const avalanche = simulate([...debts].sort((a,b) => b.apr - a.apr));
-        
-        document.getElementById('snowball').innerHTML = `
-          <h3>🔄 Debt Snowball</h3>
-          <p><strong>Payoff Time:</strong> ${snowball.months} months</p>
-          <p><strong>Total Interest:</strong> $${snowball.interest.toFixed(2)}</p>
-          <p style="font-size: 0.9rem; margin-top: 0.5rem;">Pay smallest debts first for quick wins.</p>
-        `;
-        document.getElementById('avalanche').innerHTML = `
-          <h3>📈 Debt Avalanche</h3>
-          <p><strong>Payoff Time:</strong> ${avalanche.months} months</p>
-          <p><strong>Total Interest:</strong> $${avalanche.interest.toFixed(2)}</p>
-          <p style="font-size: 0.9rem; margin-top: 0.5rem;">Pay highest interest first to save the most money.</p>
-        `;
-        document.getElementById('results').classList.remove('hidden');
-        document.getElementById('cta-panel').classList.remove('hidden');
-      }
-      
-      function simulate(debts) {
-        let months = 0, totalInterest = 0, remaining = JSON.parse(JSON.stringify(debts));
-        while(remaining.some(d => d.balance > 0)) {
-          remaining.forEach(d => {
-            if(d.balance > 0) {
-              const interest = d.balance * (d.apr / 100) / 12;
-              const totalPayment = d.min_payment + (d.extra_payment || 0);
-              const payment = Math.min(totalPayment, d.balance + interest);
-              d.balance = Math.max(0, d.balance - (payment - interest));
-              totalInterest += interest;
-            }
-          });
-          months++;
-        }
-        return { months, interest: totalInterest };
-      }
-      
-      loadDebts();
-    </script>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2 "></script>
+  <script>
+    // Yellow animated text in headline
+    const phrases = ['Calculator', 'Strategy', 'Timeline'];
+    let currentIndex = 0;
+    const animatedText = document.getElementById('animated-text');
+    
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % phrases.length;
+      animatedText.textContent = phrases[currentIndex];
+    }, 3000);
+    
+    // Supabase functions
+    const supabaseClient = supabase.createClient('https://gqgpjneoobcopymsvohx.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxZ3BqbmVvb2Jjb3B5bXN2b2h4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1ODE2NzgsImV4cCI6MjA4MTE1NzY3OH0.j_URS7960PNFOrcDNaP-C3dxzXbCsPW1AfOmncV5A68');
+    
+    async function addDebt() {
+      const debt = {
+        type: document.getElementById('debt-type').value,
+        balance: parseFloat(document.getElementById('balance').value),
+        apr: parseFloat(document.getElementById('apr').value),
+        min_payment: parseFloat(document.getElementById('min-payment').value),
+        extra_payment: parseFloat(document.getElementById('extra-payment').value) || 0
+      };
+      await supabaseClient.from('debts').insert([debt]);
+      loadDebts();
+    }
+    
+    async function loadDebts() {
+      const { data } = await supabaseClient.from('debts').select('*');
+      const list = document.getElementById('debt-list');
+      const debtsDiv = document.getElementById('debts');
+      if (data && data.length) {
+        list.classList.remove('hidden');
+        debtsDiv.innerHTML = data.map(d => `
+          <div class="debt-item">
+            <span>${d.type}: $${d.balance.toFixed(2)} at ${d.apr}%</span>
+            <button class="btn-delete" onclick="deleteDebt(${d.id})">Delete</button>
+          </div>
+        `).join('');
+      }
+    }
+    
+    async function deleteDebt(id) {
+      await supabaseClient.from('debts').delete().eq('id', id);
+      loadDebts();
+    }
+    
+    async function calculate() {
+      const { data: debts } = await supabaseClient.from('debts').select('*');
+      if (!debts || !debts.length) return alert('Please add at least one debt first.');
+      
+      const snowball = simulate([...debts].sort((a,b) => a.balance - b.balance));
+      const avalanche = simulate([...debts].sort((a,b) => b.apr - a.apr));
+      
+      document.getElementById('snowball').innerHTML = `
+        <h3>🔄 Debt Snowball</h3>
+        <p><strong>Payoff Time:</strong> ${snowball.months} months</p>
+        <p><strong>Total Interest:</strong> $${snowball.interest.toFixed(2)}</p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Pay smallest debts first for quick wins.</p>
+      `;
+      document.getElementById('avalanche').innerHTML = `
+        <h3>📈 Debt Avalanche</h3>
+        <p><strong>Payoff Time:</strong> ${avalanche.months} months</p>
+        <p><strong>Total Interest:</strong> $${avalanche.interest.toFixed(2)}</p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Pay highest interest first to save the most money.</p>
+      `;
+      document.getElementById('results').classList.remove('hidden');
+      document.getElementById('cta-panel').classList.remove('hidden');
+    }
+    
+    function simulate(debts) {
+      let months = 0, totalInterest = 0, remaining = JSON.parse(JSON.stringify(debts));
+      while(remaining.some(d => d.balance > 0)) {
+        remaining.forEach(d => {
+          if(d.balance > 0) {
+            const interest = d.balance * (d.apr / 100) / 12;
+            const totalPayment = d.min_payment + (d.extra_payment || 0);
+            const payment = Math.min(totalPayment, d.balance + interest);
+            d.balance = Math.max(0, d.balance - (payment - interest));
+            totalInterest += interest;
+          }
+        });
+        months++;
+      }
+      return { months, interest: totalInterest };
+    }
+    
+    loadDebts();
+  </script>
 </body>
 </html>
