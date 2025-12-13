@@ -1,118 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>DebtFree.io – Simple Debt Payoff Calculator</title>
+  <title>Claritea Debt Free Calculator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #212529; line-height: 1.6; }
-    .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 1rem; }
     
-    /* Header */
-    .header { text-align: center; margin-bottom: 2rem; animation: fadeIn 0.5s ease-in; }
-    .header h1 { color: #2c7a7b; font-size: 2.5rem; margin-bottom: 0.5rem; }
-    .header p { color: #718096; font-size: 1.1rem; }
+    /* Animated Banner with Multiple Waves */
+    .banner {
+      background: linear-gradient(rgba(30, 64, 175, 0.85), rgba(30, 64, 175, 0.85)), 
+                  url('https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=1200&h=400&fit=crop');
+      background-size: cover; background-position: center;
+      color: white; padding: 4rem 1rem; text-align: center;
+      position: relative; overflow: hidden;
+      animation: bannerSlide 1s ease-out;
+    }
     
-    /* Tooltips */
-    .tooltip { position: relative; display: inline-block; cursor: help; }
+    /* Multiple Horizontal Waves */
+    .wave {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 200%; height: 40px;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 60"><path fill="%23ffffff" fill-opacity="0.2" d="M0,30 C200,0 400,60 600,30 C800,0 1000,60 1200,30 L1200,60 L0,60 Z"></path></svg>');
+      background-size: 600px 60px;
+    }
+    .wave1 { animation: waveMove 6s linear infinite; height: 40px; }
+    .wave2 { animation: waveMove 8s linear infinite reverse; height: 30px; opacity: 0.5; }
+    .wave3 { animation: waveMove 10s linear infinite; height: 20px; opacity: 0.3; }
+    
+    @keyframes waveMove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-600px); }
+    }
+    
+    /* Banner Text Animations */
+    .banner h1 { 
+      font-size: 2.5rem; margin-bottom: 0.5rem; letter-spacing: -0.5px;
+      animation: textDrop 0.8s ease-out 0.3s both;
+      position: relative; z-index: 2;
+    }
+    .banner p { 
+      font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto;
+      animation: textFadeUp 0.8s ease-out 0.6s both;
+      position: relative; z-index: 2;
+    }
+    
+    /* Yellow Animated Text in Headline */
+    #animated-text {
+      color: #fbbf24; /* yellow */
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+    
+    @keyframes bannerSlide {
+      from { transform: translateY(-30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes textDrop {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes textFadeUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 0.9; }
+    }
+    
+    /* Blue Tooltip */
+    .tooltip { 
+      position: relative; display: inline-block; margin-left: 0.4rem;
+      width: 18px; height: 18px; background: #1e40af; color: white;
+      border-radius: 50%; text-align: center; line-height: 18px;
+      font-size: 0.75rem; cursor: help; vertical-align: middle;
+    }
     .tooltip .tooltiptext { 
-      visibility: hidden; width: 220px; background: #2d3748; color: #fff; 
-      text-align: center; border-radius: 6px; padding: 0.5rem; 
+      visibility: hidden; width: 220px; background: #1e293b; color: #fff; 
+      text-align: center; border-radius: 6px; padding: 0.6rem; 
       position: absolute; z-index: 1; bottom: 125%; left: 50%; 
       margin-left: -110px; opacity: 0; transition: opacity 0.3s; 
-      font-size: 0.85rem; line-height: 1.4;
+      font-size: 0.85rem; line-height: 1.4; font-weight: normal;
     }
     .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
     
-    /* Cards */
-    .card { 
-      background: white; padding: 1.5rem; margin: 1rem 0; 
-      border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      animation: slideUp 0.3s ease-out; transition: transform 0.2s;
-    }
+    /* ... [all other styles remain the same] ... */
+    .card { background: white; padding: 1.5rem; margin: 1rem 0; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); animation: slideUp 0.3s ease-out; transition: transform 0.2s; }
     .card:hover { transform: translateY(-2px); }
-    
-    /* Form */
     .form-group { margin-bottom: 1rem; }
     label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
-    input { 
-      width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; 
-      border-radius: 8px; font-size: 1rem; transition: border-color 0.2s;
-    }
-    input:focus { outline: none; border-color: #2c7a7b; }
-    
-    /* Buttons */
-    .btn { 
-      width: 100%; padding: 0.9rem; background: #2c7a7b; color: white; 
-      border: none; border-radius: 8px; font-size: 1rem; font-weight: 600;
-      cursor: pointer; transition: background 0.2s, transform 0.1s;
-    }
-    .btn:hover { background: #285e61; }
+    input { width: 100%; padding: 0.75rem; border: 2px solid #d1d5db; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s; }
+    input:focus { outline: none; border-color: #1e40af; }
+    select { width: 100%; padding: 0.75rem; border: 2px solid #d1d5db; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s; background: white; }
+    select:focus { outline: none; border-color: #1e40af; }
+    .btn { width: 100%; padding: 0.9rem; background: #1e40af; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s, transform 0.1s; }
+    .btn:hover { background: #1e3a8a; }
     .btn:active { transform: scale(0.98); }
-    
-    /* Debt List */
-    .debt-item { 
-      background: #f7fafc; padding: 1rem; margin: 0.5rem 0; 
-      border-radius: 8px; display: flex; justify-content: space-between;
-      align-items: center; animation: fadeIn 0.3s ease-in;
-    }
-    .debt-item span { flex: 1; }
-    .btn-delete { 
-      background: #e53e3e; color: white; border: none; padding: 0.4rem 0.8rem;
-      border-radius: 6px; cursor: pointer; font-size: 0.85rem;
-    }
-    
-    /* Results */
+    .debt-item { background: #f1f5f9; padding: 1rem; margin: 0.5rem 0; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; animation: fadeIn 0.3s ease-in; }
+    .debt-item span { flex: 1; font-weight: 500; }
+    .btn-delete { background: #dc2626; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; }
     .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
-    .plan { 
-      background: #2c7a7b; color: white; padding: 1.5rem; border-radius: 12px;
-      animation: fadeIn 0.5s ease-in;
-    }
-    .plan h3 { color: #81e6d9; margin-bottom: 0.5rem; }
-    .plan p { margin: 0.3rem 0; }
+    .plan { background: #1e40af; color: white; padding: 1.5rem; border-radius: 12px; animation: fadeIn 0.5s ease-in; }
+    .plan h3 { color: #60a5fa; margin-bottom: 0.5rem; }
+    .plan p { margin: 0.3rem 0; font-size: 0.95rem; }
     @media (max-width: 600px) { .results-grid { grid-template-columns: 1fr; } }
-    
-    /* CTAs */
-    .cta { 
-      background: #81e6d9; color: #2d3748; padding: 1rem; text-align: center;
-      border-radius: 8px; margin: 1rem 0; font-weight: 600;
-      animation: fadeIn 0.5s ease-in;
-    }
-    .cta a { color: #2d3748; text-decoration: none; display: block; }
+    .edu-section { background: white; padding: 2rem; margin: 2rem 0; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); animation: slideUp 0.5s ease-out; }
+    .edu-section h2 { color: #1e40af; margin-bottom: 1rem; font-size: 1.8rem; }
+    .edu-section h3 { color: #1e293b; margin: 1.5rem 0 0.5rem 0; font-size: 1.3rem; }
+    .edu-section p { margin-bottom: 1rem; color: #475569; line-height: 1.7; }
+    .edu-section ul { margin-left: 2rem; margin-bottom: 1rem; }
+    .edu-section li { margin-bottom: 0.5rem; color: #475569; line-height: 1.6; }
+    .edu-section .term-box { background: #f1f5f9; padding: 1rem; border-radius: 8px; margin: 1rem 0; border-left: 4px solid #1e40af; }
+    .edu-section .term-box h4 { color: #1e40af; margin-bottom: 0.5rem; }
+    .cta { background: #60a5fa; color: #1e293b; padding: 1rem; text-align: center; border-radius: 8px; margin: 1rem 0; font-weight: 600; animation: fadeIn 0.5s ease-in; }
+    .cta a { color: #1e293b; text-decoration: none; display: block; font-weight: 700; }
     .cta a:hover { text-decoration: underline; }
-    
-    /* Animations */
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    
-    /* Hidden */
     .hidden { display: none; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>🎯 DebtFree.io</h1>
-      <p>See exactly when you'll be debt-free. No signup. No confusion.</p>
-    </div>
+  <!-- Animated Banner with Multiple Waves -->
+  <div class="banner">
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+    <h1>Claritea Debt Free <span id="animated-text">Calculator</span></h1>
+    <p>Add your debts below and discover your exact debt-free date with two proven payoff strategies.</p>
+  </div>
 
+  <div class="container">
+    <!-- Debt Input Form -->
     <div class="card">
       <h3>Add a Debt</h3>
       
       <div class="form-group">
         <label>
-          Debt Name 
-          <span class="tooltip">❓
-            <span class="tooltiptext">What's this debt called? (e.g., "Chase Credit Card")</span>
+          Debt Type 
+          <span class="tooltip">i
+            <span class="tooltiptext">What kind of debt is this?</span>
           </span>
         </label>
-        <input id="name" type="text" placeholder="e.g., Chase Visa, Car Loan">
+        <select id="debt-type">
+          <option value="">Select debt type...</option>
+          <option value="Car Loan">Car Loan</option>
+          <option value="Student Loan">Student Loan</option>
+          <option value="Credit Card">Credit Card</option>
+          <option value="Other Debt">Other Debt</option>
+        </select>
       </div>
 
       <div class="form-group">
         <label>
           Balance Owed 
-          <span class="tooltip">❓
+          <span class="tooltip">i
             <span class="tooltiptext">How much do you still owe? Just the remaining amount.</span>
           </span>
         </label>
@@ -122,7 +167,7 @@
       <div class="form-group">
         <label>
           Interest Rate (APR) 
-          <span class="tooltip">❓
+          <span class="tooltip">i
             <span class="tooltiptext">The yearly interest rate shown on your bill. Usually 15-25% for credit cards.</span>
           </span>
         </label>
@@ -132,39 +177,47 @@
       <div class="form-group">
         <label>
           Minimum Payment 
-          <span class="tooltip">❓
+          <span class="tooltip">i
             <span class="tooltiptext">The smallest amount you must pay each month. Found on your bill.</span>
           </span>
         </label>
         <input id="min-payment" type="number" placeholder="e.g., 100">
       </div>
 
+      <div class="form-group">
+        <label>
+          Extra Monthly Payment (Optional) 
+          <span class="tooltip">i
+            <span class="tooltiptext">Pay more than the minimum to become debt-free faster! Even $50 extra helps.</span>
+          </span>
+        </label>
+        <input id="extra-payment" type="number" placeholder="e.g., 50 (pay more to get out faster!)">
+      </div>
+
       <button class="btn" onclick="addDebt()">Add Debt →</button>
     </div>
 
+    <!-- Debt List -->
     <div id="debt-list" class="card hidden">
       <h3>Your Debts</h3>
       <div id="debts"></div>
     </div>
 
+    <!-- Calculate Button -->
     <div class="card">
       <button class="btn" onclick="calculate()">See My Debt-Free Date →</button>
     </div>
 
+    <!-- Results -->
     <div id="results" class="hidden">
       <h3 style="text-align: center; margin-bottom: 1rem;">Your Payoff Plans</h3>
       <div class="results-grid">
-        <div class="plan" id="snowball">
-          <h3>🔄 Debt Snowball</h3>
-          <p>Pay smallest debts first for quick wins.</p>
-        </div>
-        <div class="plan" id="avalanche">
-          <h3>📈 Debt Avalanche</h3>
-          <p>Pay highest interest first to save the most money.</p>
-        </div>
+        <div class="plan" id="snowball"></div>
+        <div class="plan" id="avalanche"></div>
       </div>
     </div>
 
+    <!-- CTAs -->
     <div id="cta-panel" class="hidden">
       <div class="cta">
         <h3>💳 Cut Your Interest in Half</h3>
@@ -178,16 +231,94 @@
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Educational Content: What Is Debt Snowball -->
+    <div class="edu-section">
+      <h2>What Is the Debt Snowball?</h2>
+      <p>The debt snowball is a debt payoff method where you pay your debts from smallest to largest, regardless of interest rate. Knock out the smallest debt first. Then, take what you were paying on that debt and add it to the payment of your next smallest debt.</p>
+      
+      <p><strong>Why a snowball?</strong> Because just like a snowball rolling downhill, paying off debt is all about momentum. With every debt you pay off, you gain speed until you’re an unstoppable, debt-crushing force.</p>
+      
+      <h3>Here's how the debt snowball works:</h3>
+      <ul>
+        <li><strong>Step 1:</strong> List your debts from smallest to largest regardless of interest rate.</li>
+        <li><strong>Step 2:</strong> Make minimum payments on all your debts except the smallest.</li>
+        <li><strong>Step 3:</strong> Pay as much as possible on your smallest debt.</li>
+        <li><strong>Step 4:</strong> Repeat until each debt is paid in full.</li>
+      </ul>
+      
+      <p><strong>What happens then?</strong> Freedom. No more payments. No more answering to collectors. No more watching your paychecks disappear. Because when you get hyper-focused and start chucking every dollar you can at your debt, you'll see how much faster you can pay it all off. Sorry, minimum payments. You're just not good enough.</p>
+    </div>
+
+    <!-- Debt Snowball vs Avalanche -->
+    <div class="edu-section">
+      <h2>Debt Snowball vs. Debt Avalanche</h2>
+      <p>Maybe you’ve heard of another way to pay off debt—the debt avalanche. Sounds epic, right? Wrong. With the debt avalanche, you pay your debts in order from the highest interest rate to the lowest, regardless of the balance.</p>
+      
+      <p><strong>That might sound like smart math. Here’s why it's not:</strong> Debt isn’t a math problem. It’s a behavior problem.</p>
+      
+      <p>If you want to change your behavior and get out of debt, you need to stay motivated. With the debt avalanche, you may not see progress on your first debt for a long time. That’s motivating nobody. You’re way more likely to lose steam and give up.</p>
+      
+      <p>But when you use the debt snowball, you get quick wins sooner. Crush the first debt fast. Boom. On to the next. Now, you’re cooking. Suddenly, you start believing that getting out of debt is within reach. <strong>Motivation is the key to becoming debt-free, not math.</strong></p>
+    </div>
+
+    <!-- Simplified Debt Terms -->
+    <div class="edu-section">
+      <h2>Debt Terms Explained (Simple!)</h2>
+      <p>Debt terminology can be confusing and overly complicated—but it doesn’t have to be! Let’s break these down in a way you can actually understand.</p>
+      
+      <div class="term-box">
+        <h4>Minimum Payment</h4>
+        <p>This is the lowest amount you are required to pay on a debt every month (includes principal and interest). Pay any less and you might get slapped with some hefty penalties.</p>
+      </div>
+
+      <div class="term-box">
+        <h4>Balance</h4>
+        <p>It's the amount you still have to pay on your debt. If your original loan was $20,000 and you’ve paid $5,000 already, your balance would be $15,000.</p>
+      </div>
+
+      <div class="term-box">
+        <h4>Interest Rate</h4>
+        <p>When it comes to borrowing money, there’s no such thing as free. Lenders are interested in letting you borrow their money because they make money on what they loan you. Your interest rate is how much they charge, usually shown as a percentage of the principal balance.</p>
+      </div>
+
+      <div class="term-box">
+        <h4>Principal</h4>
+        <p>No, it's not that elementary school principal you were terrified of as a kid. We’re talking about the amount of money you borrowed without the interest added. So, if you borrowed $20,000 over 10 years, your principal payment would be about $167 per month.</p>
+      </div>
+
+      <div class="term-box">
+        <h4>Nonmortgage Debt</h4>
+        <p>This one is simple. It’s everything you owe, except for loans related to the purchase of your home. Yes, that includes your car notes and student loans. It’s all debt. Why don’t we ask you to list your mortgage in your debt snowball? Because after you’ve knocked out your consumer debt, you’ve got other important steps to take before tackling the house.</p>
+      </div>
+
+      <div class="term-box">
+        <h4>Debt-Free Date</h4>
+        <p>It's the day when every single cent of your consumer debt is history. Bye, credit cards. See you never, student loans. If you’ve got a mortgage, you’ll hit that hard later. But for now, it’s time to celebrate.</p>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2 "></script>
     <script>
+      // Yellow animated text in headline
+      const phrases = ['Calculator', 'Strategy', 'Timeline'];
+      let currentIndex = 0;
+      const animatedText = document.getElementById('animated-text');
+      
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % phrases.length;
+        animatedText.textContent = phrases[currentIndex];
+      }, 3000);
+      
+      // Supabase functions
       const supabaseClient = supabase.createClient('https://gqgpjneoobcopymsvohx.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxZ3BqbmVvb2Jjb3B5bXN2b2h4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1ODE2NzgsImV4cCI6MjA4MTE1NzY3OH0.j_URS7960PNFOrcDNaP-C3dxzXbCsPW1AfOmncV5A68');
       
       async function addDebt() {
         const debt = {
-          name: document.getElementById('name').value,
+          type: document.getElementById('debt-type').value,
           balance: parseFloat(document.getElementById('balance').value),
           apr: parseFloat(document.getElementById('apr').value),
-          min_payment: parseFloat(document.getElementById('min-payment').value)
+          min_payment: parseFloat(document.getElementById('min-payment').value),
+          extra_payment: parseFloat(document.getElementById('extra-payment').value) || 0
         };
         await supabaseClient.from('debts').insert([debt]);
         loadDebts();
@@ -201,7 +332,7 @@
           list.classList.remove('hidden');
           debtsDiv.innerHTML = data.map(d => `
             <div class="debt-item">
-              <span>${d.name}: $${d.balance.toFixed(2)} at ${d.apr}%</span>
+              <span>${d.type}: $${d.balance.toFixed(2)} at ${d.apr}%</span>
               <button class="btn-delete" onclick="deleteDebt(${d.id})">Delete</button>
             </div>
           `).join('');
@@ -242,7 +373,8 @@
           remaining.forEach(d => {
             if(d.balance > 0) {
               const interest = d.balance * (d.apr / 100) / 12;
-              const payment = Math.min(d.min_payment, d.balance + interest);
+              const totalPayment = d.min_payment + (d.extra_payment || 0);
+              const payment = Math.min(totalPayment, d.balance + interest);
               d.balance = Math.max(0, d.balance - (payment - interest));
               totalInterest += interest;
             }
