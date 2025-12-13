@@ -55,7 +55,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-      const supabase = supabase.createClient('https://gqgpjneoobcopymsvohx.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxZ3BqbmVvb2Jjb3B5bXN2b2h4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1ODE2NzgsImV4cCI6MjA4MTE1NzY3OH0.j_URS7960PNFOrcDNaP-C3dxzXbCsPW1AfOmncV5A68');
+      const supabaseClient = supabase.createClient('https://gqgpjneoobcopymsvohx.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxZ3BqbmVvb2Jjb3B5bXN2b2h4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1ODE2NzgsImV4cCI6MjA4MTE1NzY3OH0.j_URS7960PNFOrcDNaP-C3dxzXbCsPW1AfOmncV5A68');
       
       async function addDebt() {
         const debt = {
@@ -64,12 +64,12 @@
           apr: parseFloat(document.getElementById('apr').value),
           min_payment: parseFloat(document.getElementById('min-payment').value)
         };
-        await supabase.from('debts').insert([debt]);
+        await supabaseClient.from('debts').insert([debt]);
         loadDebts();
       }
       
       async function loadDebts() {
-        const { data } = await supabase.from('debts').select('*');
+        const { data } = await supabaseClient.from('debts').select('*');
         const list = document.getElementById('debt-list');
         const debtsDiv = document.getElementById('debts');
         if (data && data.length) {
@@ -84,12 +84,12 @@
       }
       
       async function deleteDebt(id) {
-        await supabase.from('debts').delete().eq('id', id);
+        await supabaseClient.from('debts').delete().eq('id', id);
         loadDebts();
       }
       
       async function calculate() {
-        const { data: debts } = await supabase.from('debts').select('*');
+        const { data: debts } = await supabaseClient.from('debts').select('*');
         if (!debts || !debts.length) return alert('Add at least one debt');
         
         const snowball = simulate([...debts].sort((a,b) => a.balance - b.balance));
@@ -121,4 +121,5 @@
     </script>
   </div>
 </body>
+
 </html>
