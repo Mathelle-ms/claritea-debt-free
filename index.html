@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>DebtFree.io – Crush Your Debt Faster</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f7fa; color: #002050; padding: 2em; }
+    .container { max-width: 700px; margin: 0 auto; }
+    h1 { color: #ff6900; font-size: 2em; margin-bottom: 0.5em; }
+    .card { background: white; padding: 1.5em; margin: 1em 0; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    input, button { width: 100%; padding: 0.8em; margin: 0.5em 0; border: 1px solid #ddd; border-radius: 8px; font-size: 1em; }
+    button { background: #ff6900; color: white; border: none; cursor: pointer; font-weight: bold; }
+    button:hover { background: #e55a00; }
+    .debt-item { background: #f0f4f8; padding: 1em; margin: 0.5em 0; border-radius: 8px; display: flex; justify-content: space-between; }
+    .plan { background: #002050; color: white; padding: 1.5em; margin: 1em 0; border-radius: 12px; }
+    .plan h3 { color: #00d4ff; }
+    .cta { background: #00d4ff; color: #002050; padding: 1em; text-align: center; border-radius: 8px; margin: 1em 0; font-weight: bold; }
+    .cta a { color: #002050; text-decoration: none; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎯 DebtFree.io</h1>
+    <p><strong>Free calculator.</strong> See your exact debt freedom date. No signup needed.</p>
+
+    <div class="card">
+      <h3>Add a Debt</h3>
+      <input id="name" type="text" placeholder="Debt name (e.g., Chase Visa)">
+      <input id="balance" type="number" placeholder="Current balance ($)">
+      <input id="apr" type="number" placeholder="APR (%)" step="0.01">
+      <input id="min-payment" type="number" placeholder="Minimum payment ($)">
+      <button onclick="addDebt()">Add Debt</button>
+    </div>
+
+    <div id="debt-list" class="card hidden">
+      <h3>Your Debts</h3>
+      <div id="debts"></div>
+    </div>
+
+    <div class="card">
+      <button onclick="calculate()">Calculate Payoff Plan →</button>
+    </div>
+
+    <div id="results" class="hidden">
+      <div class="plan" id="snowball"></div>
+      <div class="plan" id="avalanche"></div>
+    </div>
+
+    <div id="cta-panel" class="hidden">
+      <div class="cta"><a href="https://credible.com/your-affiliate-link" target="_blank">💳 Lower Your APR & Pay Off 2x Faster → Check 0% Balance Transfer Cards</a></div>
+      <div class="cta"><a href="https://www.lendingtree.com/your-affiliate-link" target="_blank">💰 Consolidate with a Personal Loan → Save $200/mo</a></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      const supabase = supabase.createClient('https://gqgpjneoobcopymsvohx.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxZ3BqbmVvb2Jjb3B5bXN2b2h4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1ODE2NzgsImV4cCI6MjA4MTE1NzY3OH0.j_URS7960PNFOrcDNaP-C3dxzXbCsPW1AfOmncV5A68');
+      
+      async function addDebt() {
+        const debt = {
+          name: document.getElementById('name').value,
+          balance: parseFloat(document.getElementById('balance').value),
+          apr: parseFloat(document.getElementById('apr').value),
+          min_payment: parseFloat(document.getElementById('min-payment').value)
+        };
+        await supabase.from('debts').insert([debt]);
+        loadDebts();
+      }
+      
+      async function loadDebts() {
+        const { data } = await supabase.from('debts').select('*');
+        const list = document.getElementById('debt-list');
+        const debtsDiv = document.getElementById('debts');
+        if (data && data.length) {
+          list.classList.remove('hidden');
+          debtsDiv.innerHTML = data.map(d => `
+            <div class="debt-item">
+              <span>${d.name}: $${d.balance.toFixed(2)} at ${d.apr}%</span>
+              <button onclick="deleteDebt(${d.id})">Delete</button>
+            </div>
+          `).join('');
+        }
+      }
+      
+      async function deleteDebt(id) {
+        await supabase.from('debts').delete().eq('id', id);
+        loadDebts();
+      }
+      
+      async function calculate() {
+        const { data: debts } = await supabase.from('debts').select('*');
+        if (!debts || !debts.length) return alert('Add at least one debt');
+        
+        const snowball = simulate([...debts].sort((a,b) => a.balance - b.balance));
+        const avalanche = simulate([...debts].sort((a,b) => b.apr - a.apr));
+        
+        document.getElementById('snowball').innerHTML = `<h3>🔄 Debt Snowball</h3><p><strong>Payoff time:</strong> ${snowball.months} months</p><p><strong>Total interest:</strong> $${snowball.interest.toFixed(2)}</p>`;
+        document.getElementById('avalanche').innerHTML = `<h3>📈 Debt Avalanche</h3><p><strong>Payoff time:</strong> ${avalanche.months} months</p><p><strong>Total interest:</strong> $${avalanche.interest.toFixed(2)}</p>`;
+        document.getElementById('results').classList.remove('hidden');
+        document.getElementById('cta-panel').classList.remove('hidden');
+      }
+      
+      function simulate(debts) {
+        let months = 0, totalInterest = 0, remaining = JSON.parse(JSON.stringify(debts));
+        while(remaining.some(d => d.balance > 0)) {
+          remaining.forEach(d => {
+            if(d.balance > 0) {
+              const interest = d.balance * (d.apr / 100) / 12;
+              const payment = Math.min(d.min_payment, d.balance + interest);
+              d.balance = Math.max(0, d.balance - (payment - interest));
+              totalInterest += interest;
+            }
+          });
+          months++;
+        }
+        return { months, interest: totalInterest };
+      }
+      
+      loadDebts();
+    </script>
+  </div>
+</body>
+</html>
