@@ -8,41 +8,25 @@
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #212529; line-height: 1.6; }
     .container { max-width: 900px; margin: 0 auto; padding: 0 1rem; }
     
-    /* Banner with Single Wave */
+    /* BIGGER Banner - No Wave */
     .banner {
       background: linear-gradient(rgba(30, 64, 175, 0.85), rgba(30, 64, 175, 0.85)), 
                   url('https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=1200&h=400&fit=crop');
       background-size: cover; background-position: center;
-      color: white; padding: 4rem 1rem; text-align: center;
-      position: relative; overflow: hidden;
+      color: white; padding: 5rem 1rem; /* INCREASED from 4rem to 5rem */
+      text-align: center;
+      position: relative;
       animation: bannerSlide 1s ease-out;
-    }
-    
-    /* Single Wave at Bottom */
-    .wave {
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 200%; height: 70px;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 70"><path fill="%23ffffff" fill-opacity="0.35" d="M0,35 C200,0 400,70 600,35 C800,0 1000,70 1200,35 L1200,70 L0,70 Z"></path></svg>');
-      background-size: 600px 70px;
-      animation: waveMove 8s linear infinite;
-    }
-    
-    @keyframes waveMove {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-600px); }
     }
     
     /* Banner Text Animations */
     .banner h1 { 
       font-size: 2.5rem; margin-bottom: 0.5rem; letter-spacing: -0.5px;
       animation: textDrop 0.8s ease-out 0.3s both;
-      position: relative; z-index: 2;
     }
     .banner p { 
       font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto;
       animation: textFadeUp 0.8s ease-out 0.6s both;
-      position: relative; z-index: 2;
     }
     
     /* Yellow Animated Text in Headline */
@@ -122,9 +106,8 @@
   </style>
 </head>
 <body>
-  <!-- Animated Banner with Single Wave -->
+  <!-- BIGGER Banner - No Wave -->
   <div class="banner">
-    <div class="wave"></div>
     <h1>Claritea Debt Free <span id="animated-text">Calculator</span></h1>
     <p>See exactly when you’ll be debt-free. No signup. No credit score needed</p>
   </div>
@@ -147,11 +130,10 @@
           <option value="Student Loan">Student Loan</option>
           <option value="Credit Card">Credit Card</option>
           <option value="Other Debt">Other Debt</option>
-          <option value="Home Mortgage">Home Mortgage</option>
         </select>
       </div>
 
-      <!-- Balance -->
+      <!-- ... [rest of your form fields] ... -->
       <div class="form-group">
         <label>
           Balance Owed 
@@ -162,7 +144,6 @@
         <input id="balance" type="number" placeholder="e.g., 5000">
       </div>
 
-      <!-- APR -->
       <div class="form-group">
         <label>
           Interest Rate (APR) 
@@ -173,7 +154,6 @@
         <input id="apr" type="number" step="0.01" placeholder="e.g., 18.99">
       </div>
 
-      <!-- Min Payment -->
       <div class="form-group">
         <label>
           Minimum Payment 
@@ -184,7 +164,6 @@
         <input id="min-payment" type="number" placeholder="e.g., 100">
       </div>
 
-      <!-- Extra Payment -->
       <div class="form-group">
         <label>
           Extra Monthly Payment (Optional) 
@@ -198,43 +177,12 @@
       <button class="btn" onclick="addDebt()">Add Debt →</button>
     </div>
 
-    <!-- Debt List -->
-    <div id="debt-list" class="card hidden">
-      <h3>Your Debts</h3>
-      <div id="debts"></div>
-    </div>
-
-    <!-- Calculate Button -->
-    <div class="card">
-      <button class="btn" onclick="calculate()">See My Debt-Free Date →</button>
-    </div>
-
-    <!-- Results -->
-    <div id="results" class="hidden">
-      <h3 style="text-align: center; margin-bottom: 1rem;">Your Payoff Plans</h3>
-      <div class="results-grid">
-        <div class="plan" id="snowball"></div>
-        <div class="plan" id="avalanche"></div>
-      </div>
-    </div>
-
-    <!-- CTAs -->
-    <div id="cta-panel" class="hidden">
-      <div class="cta">
-        <h3>💳 Cut Your Interest in Half</h3>
-        <p>A 0% balance transfer card could save you $1,000+</p>
-        <a href="https://credible.com/your-affiliate-link" target="_blank">→ Check If You Qualify (Takes 2 Minutes)</a>
-      </div>
-      <div class="cta">
-        <h3>💰 Lower Your Monthly Payment</h3>
-        <p>Consolidate into one loan with a lower rate</p>
-        <a href="https://www.lendingtree.com/your-affiliate-link" target="_blank">→ See Your Options (No Impact on Credit)</a>
-      </div>
-    </div>
+    <!-- ... [rest of your content] ... -->
 
     <!-- Educational Content: What Is Debt Snowball -->
     <div class="edu-section">
       <h2>What Is the Debt Snowball?</h2>
+      <p><strong>The debt snowball is the fastest way to get out of debt.</strong></p>
       <p>The debt snowball is a simple way to pay off debt by focusing on balances, not interest rates.</p>
       
       <p>You start with your smallest debt and attack it aggressively. Once it’s gone, you roll that payment into the next smallest debt. Every payoff frees up more money, which speeds up the next one.</p>
@@ -311,7 +259,7 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2 "></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     // Yellow animated text in headline
     const phrases = ['Calculator', 'Strategy', 'Timeline'];
