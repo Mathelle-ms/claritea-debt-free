@@ -108,7 +108,7 @@
         <label>Extra Monthly Payment (Optional) <span class="tooltip">i<span class="tooltiptext">Pay extra to finish faster</span></span></label>
         <input id="extra-payment" type="number" placeholder="e.g., 50">
       </div>
-      <button class="btn" onclick="addDebt()">Add Debt →</button>
+      <button class="btn" onclick="calculate()">See My Debt-Free Date →</button>
     </div>
 
     <!--  DEBT LIST  -->
@@ -195,111 +195,128 @@
     </div>
   </div>
 
-  <!--  SUPABASE  -->
+  <!--  SUPABASE + SCRIPTS  -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    /* ---------- animated headline ---------- */
-    const phrases=['Calculator','Strategy','Timeline'];
-    let idx=0;
-    setInterval(()=>{idx=(idx+1)%phrases.length;document.getElementById('animated-text').textContent=phrases[idx]},3000);
+    /* ---------- 1.  small helpers ---------- */
+    const monthOffset = (from, months) => {
+      const d = new Date(from); d.setMonth(d.getMonth() + months);
+      return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    };
+    function simulate(debts) {
+      let months = 0, totalInterest = 0, remaining = JSON.parse(JSON.stringify(debts));
+      while (remaining.some(d => d.balance > 0)) {
+        remaining.forEach(d => {
+          if (d.balance > 0) {
+            const interest = d.balance * (d.apr / 100) / 12;
+            const pay = Math.min(d.min_payment + (d.extra_payment || 0), d.balance + interest);
+            d.balance = Math.max(0, d.balance - (pay - interest));
+            totalInterest += interest;
+          }
+        }); months++;
+      }
+      return { months, interest: totalInterest };
+    }
 
-    /* ---------- supabase client ---------- */
-    const supabaseClient = supabase.createClient(
-      'https://gqgpjneoobcopymsvohx.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxZ3BqbmVvb2Jjb3B5bXN2b2h4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1ODE2NzgsImV4cCI6MjA4MTE1NzY3OH0.j_URS7960PNFOrcDNaP-C3dxzXbCsPW1AfOmncV5A68'
-    );
+    /* ---------- 2.  core calculate (hoisted) ---------- */
+    let debtSnapshot = [];
+    async function calculate() {
+      const { data: debts } = await supabaseClient.from('debts').select('*');
+      if (!debts || !debts.length) { alert('Please add at least one debt first.'); return; }
 
-    /* ---------- debt CRUD ---------- */
-    async function addDebt(){
-      const debt={
-        type:document.getElementById('debt-type').value,
-        balance:parseFloat(document.getElementById('balance').value),
-        apr:parseFloat(document.getElementById('apr').value),
-        min_payment:parseFloat(document.getElementById('min-payment').value),
-        extra_payment:parseFloat(document.getElementById('extra-payment').value)||0
+      const snowball = simulate([...debts].sort((a, b) => a.balance - b.balance));
+      const avalanche = simulate([...debts].sort((a, b) => b.apr - a.apr));
+
+      document.getElementById('snowball').innerHTML = `
+        <h3>🔄 Debt Snowball</h3>
+        <p><strong>Payoff Time:</strong> ${snowball.months} months</p>
+        <p><strong>Total Interest:</strong> $${snowball.interest.toFixed(2)}</p>
+        <p style="font-size:0.9rem;margin-top:0.5rem;">Pay smallest debts first for quick wins.</p>`;
+      document.getElementById('avalanche').innerHTML = `
+        <h3>📈 Debt Avalanche</h3>
+        <p><strong>Payoff Time:</strong> ${avalanche.months} months</p>
+        <p><strong>Total Interest:</strong> $${avalanche.interest.toFixed(2)}</p>
+        <p style="font-size:0.9rem;margin-top:0.5rem;">Pay highest interest first to save the most money.</p>`;
+
+      document.getElementById('results').classList.remove('hidden');
+      document.getElementById('cta-panel').classList.remove('hidden');
+
+      /* fill NEW header card + prep for slider */
+      debtSnapshot = JSON.parse(JSON.stringify(debts));
+      const base = simulate(debts);
+      const minDate = monthOffset(new Date(), base.months);
+      document.getElementById('min-date').textContent = minDate;
+      document.getElementById('min-months').textContent = `${base.months} months`;
+
+      const slider = document.getElementById('extra-slider');
+      slider.value = 0;
+      slider.dispatchEvent(new Event('input'));
+    }
+
+    /* ---------- 3.  slider live update ---------- */
+    const slider = document.getElementById('extra-slider');
+    const extraVal = document.getElementById('extra-val');
+    const extraBox = document.getElementById('extra-box');
+    const newDateEl = document.getElementById('new-date');
+    const newMonthsEl = document.getElementById('new-months');
+    slider.addEventListener('input', () => {
+      const extra = parseInt(slider.value, 10);
+      extraVal.textContent = `$${extra}`;
+      if (extra === 0) { extraBox.style.display = 'none'; return; }
+      extraBox.style.display = 'block';
+      const withExtra = debtSnapshot.map(d => ({ ...d, extra_payment: (d.extra_payment || 0) + extra }));
+      const res = simulate(withExtra);
+      newDateEl.textContent = monthOffset(new Date(), res.months);
+      newMonthsEl.textContent = `${res.months} months`;
+    });
+
+    /* ---------- 4.  debt CRUD ---------- */
+    async function addDebt() {
+      const debt = {
+        type: document.getElementById('debt-type').value,
+        balance: parseFloat(document.getElementById('balance').value),
+        apr: parseFloat(document.getElementById('apr').value),
+        min_payment: parseFloat(document.getElementById('min-payment').value),
+        extra_payment: parseFloat(document.getElementById('extra-payment').value) || 0
       };
-      if(!debt.type||isNaN(debt.balance)||isNaN(debt.apr)||isNaN(debt.min_payment)){alert('Please fill in all required fields.');return}
+      if (!debt.type || isNaN(debt.balance) || isNaN(debt.apr) || isNaN(debt.min_payment)) {
+        alert('Please fill in all required fields.'); return;
+      }
       await supabaseClient.from('debts').insert([debt]);
       loadDebts();
     }
-    async function loadDebts(){
-      const{data}=await supabaseClient.from('debts').select('*');
-      const list=document.getElementById('debt-list');
-      const container=document.getElementById('debts');
-      if(data&&data.length){
+    async function deleteDebt(id) {
+      await supabaseClient.from('debts').delete().eq('id', id);
+      loadDebts();
+    }
+    async function loadDebts() {
+      const { data } = await supabaseClient.from('debts').select('*');
+      const list = document.getElementById('debt-list');
+      const container = document.getElementById('debts');
+      if (data && data.length) {
         list.classList.remove('hidden');
-        container.innerHTML=data.map(d=>`
+        container.innerHTML = data.map(d => `
           <div class="debt-item">
             <span>${d.type}: $${d.balance.toFixed(2)} at ${d.apr}%</span>
             <button class="btn-delete" onclick="deleteDebt(${d.id})">Delete</button>
           </div>`).join('');
-      }else{list.classList.add('hidden')}
-    }
-    async function deleteDebt(id){
-      await supabaseClient.from('debts').delete().eq('id',id);
-      loadDebts();
+      } else { list.classList.add('hidden'); }
     }
 
-    /* ---------- simulation ---------- */
-    function simulate(debts){
-      let months=0,totalInterest=0,remaining=JSON.parse(JSON.stringify(debts));
-      while(remaining.some(d=>d.balance>0)){
-        remaining.forEach(d=>{
-          if(d.balance>0){
-            const interest=d.balance*(d.apr/100)/12;
-            const pay=Math.min(d.min_payment+(d.extra_payment||0),d.balance+interest);
-            d.balance=Math.max(0,d.balance-(pay-interest));
-            totalInterest+=interest;
-          }
-        });months++;
-      }
-      return{months,interest:totalInterest}
-    }
-
-    /* ---------- calculate + NEW live slider ---------- */
-    let debtSnapshot=[]; // for slider
-    const monthOffset=(from,months)=>{
-      const d=new Date(from);d.setMonth(d.getMonth()+months);
-      return d.toLocaleDateString('en-US',{month:'long',year:'numeric'})
-    };
-    const simulateExtra=extra=>{
-      const withExtra=debtSnapshot.map(d=>({...d,extra_payment:(d.extra_payment||0)+extra}));
-      return simulate(withExtra);
-    };
-
-    const originalCalc=calculate;
-    calculate=async function(){
-      await originalCalc(); // snow + avalanche cards
-      const{data}=await supabaseClient.from('debts').select('*');
-      debtSnapshot=JSON.parse(JSON.stringify(data));
-      const base=simulate(debtSnapshot);
-      const minDate=monthOffset(new Date(),base.months);
-      document.getElementById('min-date').textContent=minDate;
-      document.getElementById('min-months').textContent=`${base.months} months`;
-      // reset slider
-      const slider=document.getElementById('extra-slider');
-      slider.value=0;
-      slider.dispatchEvent(new Event('input'));
-    };
-
-    /* ---------- slider live update ---------- */
-    const slider=document.getElementById('extra-slider');
-    const extraVal=document.getElementById('extra-val');
-    const extraBox=document.getElementById('extra-box');
-    const newDateEl=document.getElementById('new-date');
-    const newMonthsEl=document.getElementById('new-months');
-    slider.addEventListener('input',()=>{
-      const extra=parseInt(slider.value,10);
-      extraVal.textContent=`$${extra}`;
-      if(extra===0){extraBox.style.display='none';return}
-      extraBox.style.display='block';
-      const res=simulateExtra(extra);
-      newDateEl.textContent=monthOffset(new Date(),res.months);
-      newMonthsEl.textContent=`${res.months} months`;
-    };
-
-    /* ---------- initial load ---------- */
+    /* ---------- 5.  supabase client + initial load ---------- */
+    const supabaseClient = supabase.createClient(
+      'https://gqgpjneoobcopymsvohx.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxZ3BqbmVvb2Jjb3B5bXN2b2h4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1ODE2NzgsImV4cCI6MjA4MTE1NzY3OH0.j_URS7960PNFOrcDNaP-C3dxzXbCsPW1AfOmncV5A68'
+    );
     loadDebts();
+
+    /* ---------- 6.  animated headline (nice-to-have) ---------- */
+    const phrases = ['Calculator', 'Strategy', 'Timeline'];
+    let idx = 0;
+    setInterval(() => {
+      idx = (idx + 1) % phrases.length;
+      document.getElementById('animated-text').textContent = phrases[idx];
+    }, 3000);
   </script>
 </body>
 </html>
