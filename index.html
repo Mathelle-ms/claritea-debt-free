@@ -279,7 +279,10 @@
       /* show card & CTAs ,  HIDE  EDU  SECTIONS  */
       document.getElementById('results').classList.remove('hidden');
       document.getElementById('cta-panel').classList.remove('hidden');
-      document.getElementById('edu-panel').classList.add('hidden');   //  ←  ADD  THIS  LINE
+      document.getElementById('edu-panel').classList.add('hidden');
+
+      // ↓↓↓  SMOOTH  SCROLL  to results  ↓↓↓
+      document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     /* ---------- 3.  slider live update + color switch ---------- */
