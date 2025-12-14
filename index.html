@@ -133,37 +133,63 @@
   </div>
 
   <!--  COUNTRY  PICKER  -->
-  <div class="country-bar">
-    <label for="country" style="margin-right:.5rem;">Choose your country:</label>
-    <select id="country" onchange="switchCountry(this.value)">
-      <option value="US">🇺🇸 United States</option>
-      <option value="FR">🇫🇷 France</option>
-      <option value="ES">🇪🇸 Spain</option>
-      <option value="LU">🇱🇺 Luxembourg</option>
-      <option value="SG">🇸🇬 Singapore</option>
-      <option value="IE">🇮🇪 Ireland</option>
-      <option value="QA">🇶🇦 Qatar</option>
-      <option value="CH">🇨🇭 Switzerland</option>
-      <option value="NO">🇳🇴 Norway</option>
-      <option value="AE">🇦🇪 United Arab Emirates</option>
-      <option value="DK">🇩🇰 Denmark</option>
-      <option value="IS">🇮🇸 Iceland</option>
-      <option value="AU">🇦🇺 Australia</option>
-      <option value="SE">🇸🇪 Sweden</option>
-      <option value="NL">🇳🇱 Netherlands</option>
-      <option value="DE">🇩🇪 Germany</option>
-      <option value="CA">🇨🇦 Canada</option>
-      <option value="FI">🇫🇮 Finland</option>
-      <option value="BE">🇧🇪 Belgium</option>
-      <option value="AT">🇦🇹 Austria</option>
-      <option value="JP">🇯🇵 Japan</option>
-      <option value="GB">🇬🇧 United Kingdom</option>
-      <option value="KR">🇰🇷 South Korea</option>
-      <option value="IT">🇮🇹 Italy</option>
-      <option value="CZ">🇨🇿 Czech Republic</option>
-      <option value="HT">🇭🇹 Haiti</option>
-    </select>
-  </div>
+ <!--  COUNTRY  PICKER  –  BANNER-YELLOW  +  BLACK  BOLD  LABEL  -->
+<style>
+  .country-bar{
+    background:#fbbf24;            /* same yellow as banner headline */
+    padding:1.5rem 1rem;
+    text-align:center;
+    font-size:1rem;
+  }
+  .country-bar label{
+    font-weight:700;               /* bold */
+    margin-right:.5rem;
+    color:#000000;               /* black text */
+  }
+  .country-bar select{
+    padding:.6rem 1.2rem;
+    font-size:1rem;
+    border-radius:8px;
+    border:2px solid #1e40af;
+    background:#fff;
+    color:#1e293b;
+    cursor:pointer;
+    font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;
+    min-width:240px;
+  }
+</style>
+
+<div class="country-bar">
+  <label for="country">Choose your country:</label>
+  <select id="country" onchange="switchCountry(this.value)">
+    <option value="US">🇺🇸 United States</option>
+    <option value="AE">🇦🇪 United Arab Emirates</option>
+    <option value="AT">🇦🇹 Austria</option>
+    <option value="AU">🇦🇺 Australia</option>
+    <option value="BE">🇧🇪 Belgium</option>
+    <option value="CA">🇨🇦 Canada</option>
+    <option value="CH">🇨🇭 Switzerland</option>
+    <option value="CZ">🇨🇿 Czech Republic</option>
+    <option value="DE">🇩🇪 Germany</option>
+    <option value="DK">🇩🇰 Denmark</option>
+    <option value="ES">🇪🇸 Spain</option>
+    <option value="FI">🇫🇮 Finland</option>
+    <option value="FR">🇫🇷 France</option>
+    <option value="GB">🇬🇧 United Kingdom</option>
+    <option value="HT">🇭🇹 Haiti</option>
+    <option value="IE">🇮🇪 Ireland</option>
+    <option value="IS">🇮🇸 Iceland</option>
+    <option value="IT">🇮🇹 Italy</option>
+    <option value="JP">🇯🇵 Japan</option>
+    <option value="KR">🇰🇷 South Korea</option>
+    <option value="LU">🇱🇺 Luxembourg</option>
+    <option value="NL">🇳🇱 Netherlands</option>
+    <option value="NO">🇳🇴 Norway</option>
+    <option value="QA">🇶🇦 Qatar</option>
+    <option value="SE">🇸🇪 Sweden</option>
+    <option value="SG">🇸🇬 Singapore</option>
+  </select>
+</div>
 
   <div class="container">
 
