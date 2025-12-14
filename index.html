@@ -53,6 +53,30 @@
     .plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
     @media(max-width:600px){.result-row,.plan-grid{grid-template-columns:1fr}}
 
+    /*  BLUE  main owed box  */
+    .result-box.main{
+      background:#1e40af;
+      color:#fff;
+      border-color:#1e40af;
+    }
+    .result-box.main .label,
+    .result-box.main .date,
+    .result-box.main .months{
+      color:#fff;
+    }
+
+    /*  LIGHT-GREEN  when slider > 0  */
+    .result-box.boost{
+      background:#86efac;
+      color:#1e293b;
+      border-color:#86efac;
+    }
+    .result-box.boost .label,
+    .result-box.boost .date,
+    .result-box.boost .months{
+      color:#1e293b;
+    }
+
     /*  EDU / CTA  */
     .edu-section{background:#fff;padding:2rem;margin:2rem 0;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
     .edu-section h2{color:#1e40af;margin-bottom:1rem;font-size:1.8rem}
@@ -129,7 +153,7 @@
       <div class="ramsey-card">
         <h2>Your Debt-Free Date</h2>
         <div class="result-row">
-          <div class="result-box">
+          <div class="result-box main">
             <div class="label">If you continue making only minimum payments:</div>
             <div class="date" id="min-date">—</div>
             <div class="months" id="min-months">—</div>
@@ -150,10 +174,7 @@
           </div>
         </div>
 
-        <div class="plan-grid">
-          <div class="plan" id="snowball"></div>
-          <div class="plan" id="avalanche"></div>
-        </div>
+        <!--  SNOW / AVALANCHE  CARDS  REMOVED  -->
       </div>
     </div>
 
@@ -226,23 +247,6 @@
       const { data: debts } = await supabaseClient.from('debts').select('*');
       if (!debts || !debts.length) { alert('Please add at least one debt first.'); return; }
 
-      const snowball = simulate([...debts].sort((a, b) => a.balance - b.balance));
-      const avalanche = simulate([...debts].sort((a, b) => b.apr - a.apr));
-
-      document.getElementById('snowball').innerHTML = `
-        <h3>🔄 Debt Snowball</h3>
-        <p><strong>Payoff Time:</strong> ${snowball.months} months</p>
-        <p><strong>Total Interest:</strong> $${snowball.interest.toFixed(2)}</p>
-        <p style="font-size:0.9rem;margin-top:0.5rem;">Pay smallest debts first for quick wins.</p>`;
-      document.getElementById('avalanche').innerHTML = `
-        <h3>📈 Debt Avalanche</h3>
-        <p><strong>Payoff Time:</strong> ${avalanche.months} months</p>
-        <p><strong>Total Interest:</strong> $${avalanche.interest.toFixed(2)}</p>
-        <p style="font-size:0.9rem;margin-top:0.5rem;">Pay highest interest first to save the most money.</p>`;
-
-      document.getElementById('results').classList.remove('hidden');
-      document.getElementById('cta-panel').classList.remove('hidden');
-
       /* fill NEW header card + prep for slider */
       debtSnapshot = JSON.parse(JSON.stringify(debts));
       const base = simulate(debts);
@@ -253,9 +257,13 @@
       const slider = document.getElementById('extra-slider');
       slider.value = 0;
       slider.dispatchEvent(new Event('input'));
+
+      /* show card & CTAs (snow/avalanche removed) */
+      document.getElementById('results').classList.remove('hidden');
+      document.getElementById('cta-panel').classList.remove('hidden');
     }
 
-    /* ---------- 3.  slider live update ---------- */
+    /* ---------- 3.  slider live update + color switch ---------- */
     const slider = document.getElementById('extra-slider');
     const extraVal = document.getElementById('extra-val');
     const extraBox = document.getElementById('extra-box');
@@ -264,8 +272,16 @@
     slider.addEventListener('input', () => {
       const extra = parseInt(slider.value, 10);
       extraVal.textContent = `$${extra}`;
-      if (extra === 0) { extraBox.style.display = 'none'; return; }
+
+      /*  REMOVE  green  when  0  */
+      if (extra === 0) {
+        extraBox.style.display = 'none';
+        extraBox.classList.remove('boost');
+        return;
+      }
+      /*  SHOW  +  ADD  green  */
       extraBox.style.display = 'block';
+      extraBox.classList.add('boost');
       const withExtra = debtSnapshot.map(d => ({ ...d, extra_payment: (d.extra_payment || 0) + extra }));
       const res = simulate(withExtra);
       newDateEl.textContent = monthOffset(new Date(), res.months);
