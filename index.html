@@ -198,6 +198,18 @@
           </div>
         </div>
 
+        <!--  NEW  LOSS  &  NET  LOSS  BOXES  -->
+        <div style="margin-top:1rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="result-box" style="border-color:#dc2626;background:#fee2e2;">
+            <div class="label">If you only pay minimums you’ll lose:</div>
+            <div class="date" id="loss-amount" style="color:#dc2626;">—</div>
+          </div>
+          <div class="result-box" style="border-color:#16a34a;background:#dcfce7;">
+            <div class="label">Net loss after extra payments:</div>
+            <div class="date" id="net-loss" style="color:#16a34a;">—</div>
+          </div>
+        </div>
+
         <!--  SNOW / AVALANCHE  CARDS  REMOVED  -->
       </div>
     </div>
@@ -282,6 +294,10 @@
       document.getElementById('min-date').textContent = minDate;
       document.getElementById('min-months').textContent = `${baseSave.months} months`;
 
+      /* show fixed loss */
+      document.getElementById('loss-amount').textContent =
+        `$${minInterest.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}`;
+
       debtSnapshot = JSON.parse(JSON.stringify(debts));
 
       const slider = document.getElementById('extra-slider');
@@ -297,13 +313,14 @@
       document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    /* ---------- 3.  slider live update + color switch + saving ---------- */
+    /* ---------- 3.  slider live update + color switch + saving + net loss ---------- */
     const slider = document.getElementById('extra-slider');
     const extraVal = document.getElementById('extra-val');
     const extraBox = document.getElementById('extra-box');
     const newDateEl = document.getElementById('new-date');
     const newMonthsEl = document.getElementById('new-months');
     const savingEl = document.getElementById('saving-amount');
+    const netLossEl = document.getElementById('net-loss');
 
     slider.addEventListener('input', () => {
       const extra = parseInt(slider.value, 10);
@@ -325,6 +342,10 @@
       //  LIVE  SAVING  AMOUNT  –  BLACK  &  BOLD
       const saved = minInterest - res.interest;
       savingEl.textContent = `You’ll save $${saved.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+      //  LIVE  NET  LOSS  (lose − save)  →  drops  toward  zero
+      const net = minInterest - saved;
+      netLossEl.textContent = `$${net.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     });
 
     /* ---------- 4.  debt CRUD ---------- */
