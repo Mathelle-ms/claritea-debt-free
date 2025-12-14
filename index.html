@@ -634,6 +634,16 @@
     );
     loadDebts();
 
+<!-- ---------- 8-b.  AUTO-CLEAR  PREVIOUS  DEBTS  ---------- -->
+<script>
+(async () => {
+  // 1. delete every row in the remote table
+  await supabaseClient.from('debts').delete().neq('id', 0);
+  // 2. show empty list
+  loadDebts();
+})();
+</script>
+
     /* ---------- 8.  animated headline (nice-to-have) ---------- */
     const phrases = ['Calculator', 'Strategy', 'Timeline'];
     let idx = 0;
