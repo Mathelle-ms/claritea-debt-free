@@ -9,8 +9,8 @@
     .container{max-width:900px;margin:0 auto;padding:0 1rem}
 
     /*  BANNER  */
-    .banner{background:linear-gradient(rgba(30,64,175,.85),rgba(30,64,175,.85)),url(https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=1200&h=400&fit=crop) center/cover;color:#fff;padding:4rem 1rem;text-align:center;position:relative;overflow:hidden}
-    .wave{position:absolute;bottom:0;left:0;width:200%;height:70px;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 70"><path fill="%23ffffff" fill-opacity="0.35" d="M0,35 C200,0 400,70 600,35 C800,0 1000,70 1200,35 L1200,70 L0,70 Z"/></svg>') 0 0/600px 70px;animation:waveMove 8s linear infinite}
+    .banner{background:linear-gradient(rgba(30,64,175,.85),rgba(30,64,175,.85)),url(https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=1200&h=400&fit=crop ) center/cover;color:#fff;padding:4rem 1rem;text-align:center;position:relative;overflow:hidden}
+    .wave{position:absolute;bottom:0;left:0;width:200%;height:70px;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg " viewBox="0 0 1200 70"><path fill="%23ffffff" fill-opacity="0.35" d="M0,35 C200,0 400,70 600,35 C800,0 1000,70 1200,35 L1200,70 L0,70 Z"/></svg>') 0 0/600px 70px;animation:waveMove 8s linear infinite}
     @keyframes waveMove{0%{transform:translateX(0)}100%{transform:translateX(-600px)}}
     .banner h1{font-size:2.5rem;margin-bottom:.5rem;letter-spacing:-.5px;animation:textDrop .8s ease-out .3s both}
     .banner p{font-size:1.1rem;opacity:.9;max-width:600px;margin:0 auto;animation:textFadeUp .8s ease-out .6s both}
@@ -21,7 +21,7 @@
 
     /*  COUNTRY  PICKER  */
     .country-bar{background:#eef2ff;padding:1rem;text-align:center;font-size:1rem}
-    .country-bar select{padding:.5rem 1rem;font-size:1rem;border-radius:6px;border:2px solid #1e40af;background:#fff;color:#1e293b;cursor:pointer}
+    .country-bar select{padding:.5rem 1rem;font-size:1rem;border-radius:6px;border:2px solid #1e40af;background:#fff;color:#1e293b;cursor:pointer;font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif}
 
     /*  TOOLTIP  */
     .tooltip{position:relative;display:inline-block;margin-left:.4rem;width:18px;height:18px;background:#1e40af;color:#fff;border-radius:50%;text-align:center;line-height:18px;font-size:.75rem;cursor:help;vertical-align:middle}
@@ -90,7 +90,7 @@
       margin-top:.4rem;
     }
 
-    /*  CTA  –  SAME  GREEN  */
+    /*  CTA  –  SAME  GREEN  STYLE  */
     .cta-green{
       background:#86efac;
       color:#1e293b;
@@ -139,6 +139,29 @@
       <option value="US">🇺🇸 United States</option>
       <option value="FR">🇫🇷 France</option>
       <option value="ES">🇪🇸 Spain</option>
+      <option value="LU">🇱🇺 Luxembourg</option>
+      <option value="SG">🇸🇬 Singapore</option>
+      <option value="IE">🇮🇪 Ireland</option>
+      <option value="QA">🇶🇦 Qatar</option>
+      <option value="CH">🇨🇭 Switzerland</option>
+      <option value="NO">🇳🇴 Norway</option>
+      <option value="AE">🇦🇪 United Arab Emirates</option>
+      <option value="DK">🇩🇰 Denmark</option>
+      <option value="IS">🇮🇸 Iceland</option>
+      <option value="AU">🇦🇺 Australia</option>
+      <option value="SE">🇸🇪 Sweden</option>
+      <option value="NL">🇳🇱 Netherlands</option>
+      <option value="DE">🇩🇪 Germany</option>
+      <option value="CA">🇨🇦 Canada</option>
+      <option value="FI">🇫🇮 Finland</option>
+      <option value="BE">🇧🇪 Belgium</option>
+      <option value="AT">🇦🇹 Austria</option>
+      <option value="JP">🇯🇵 Japan</option>
+      <option value="GB">🇬🇧 United Kingdom</option>
+      <option value="KR">🇰🇷 South Korea</option>
+      <option value="IT">🇮🇹 Italy</option>
+      <option value="CZ">🇨🇿 Czech Republic</option>
+      <option value="HT">🇭🇹 Haiti</option>
     </select>
   </div>
 
@@ -237,12 +260,12 @@
       <div class="cta-green">
         <h3>💳 <span data-i18n="cta1Title">Cut Your Interest in Half</span></h3>
         <p data-i18n="cta1Text">A 0% balance-transfer card could save you $1,000+</p>
-        <a href="https://credible.com/your-affiliate-link" target="_blank" data-i18n="cta1Btn">→ Check If You Qualify (Takes 2 Minutes)</a>
+        <a href="https://credible.com/your-affiliate-link " target="_blank" data-i18n="cta1Btn">→ Check If You Qualify (Takes 2 Minutes)</a>
       </div>
       <div class="cta-green">
         <h3>💰 <span data-i18n="cta2Title">Lower Your Monthly Payment</span></h3>
         <p data-i18n="cta2Text">Consolidate into one loan with a lower rate</p>
-        <a href="https://www.lendingtree.com/your-affiliate-link" target="_blank" data-i18n="cta2Btn">→ See Your Options (No Impact on Credit)</a>
+        <a href="https://www.lendingtree.com/your-affiliate-link " target="_blank" data-i18n="cta2Btn">→ See Your Options (No Impact on Credit)</a>
       </div>
     </div>
 
@@ -276,13 +299,36 @@
   </div>
 
   <!--  SUPABASE + SCRIPTS  -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2 "></script>
   <script>
     /* ---------- 1.  locale map : language + currency ---------- */
     const LOCALES = {
       US: { lang: 'en', currency: 'USD', symbol: '$' },
       FR: { lang: 'fr', currency: 'EUR', symbol: '€' },
-      ES: { lang: 'es', currency: 'EUR', symbol: '€' }
+      ES: { lang: 'es', currency: 'EUR', symbol: '€' },
+      LU: { lang: 'fr', currency: 'EUR', symbol: '€' },
+      SG: { lang: 'en', currency: 'SGD', symbol: 'S$' },
+      IE: { lang: 'en', currency: 'EUR', symbol: '€' },
+      QA: { lang: 'en', currency: 'QAR', symbol: 'ر.ق' },
+      CH: { lang: 'en', currency: 'CHF', symbol: 'CHF' },
+      NO: { lang: 'en', currency: 'NOK', symbol: 'kr' },
+      AE: { lang: 'en', currency: 'AED', symbol: 'د.إ' },
+      DK: { lang: 'en', currency: 'DKK', symbol: 'kr' },
+      IS: { lang: 'en', currency: 'ISK', symbol: 'kr' },
+      AU: { lang: 'en', currency: 'AUD', symbol: 'A$' },
+      SE: { lang: 'en', currency: 'SEK', symbol: 'kr' },
+      NL: { lang: 'en', currency: 'EUR', symbol: '€' },
+      DE: { lang: 'de', currency: 'EUR', symbol: '€' },
+      CA: { lang: 'en', currency: 'CAD', symbol: 'C$' },
+      FI: { lang: 'en', currency: 'EUR', symbol: '€' },
+      BE: { lang: 'en', currency: 'EUR', symbol: '€' },
+      AT: { lang: 'de', currency: 'EUR', symbol: '€' },
+      JP: { lang: 'ja', currency: 'JPY', symbol: '¥' },
+      GB: { lang: 'en', currency: 'GBP', symbol: '£' },
+      KR: { lang: 'ko', currency: 'KRW', symbol: '₩' },
+      IT: { lang: 'it', currency: 'EUR', symbol: '€' },
+      CZ: { lang: 'cs', currency: 'CZK', symbol: 'Kč' },
+      HT: { lang: 'fr', currency: 'HTG', symbol: 'G' }
     };
 
     const TEXTS = {
@@ -313,7 +359,7 @@
         boostText: 'Vous voulez être libre de dette plus tôt ? Bien sûr !', boostLabel: 'Augmentez vos paiements pour rembourser plus vite !',
         youLose: 'Si vous ne payez que les minimums vous perdrez :', netLoss: 'Perte nette après paiements supplémentaires :', savingPrefix: 'Vous économiserez',
         whatIsSnowball: 'Qu’est-ce que la Boule de Neige ?', snowballDesc: 'La boule de neige est une méthode simple qui se concentre sur les soldes, pas sur les taux.',
-        step1: 'Étape 1 : Listez vos dettes du plus petit au plus grand.', step2: 'Étape 2 : Payez les minimums sur toutes sauf la plus petite.', step3: 'Étape 3 : Attaquez la plus petite avec tous les dollars supplémentaires.', step4: 'Étape 4 : Répétez jusqu’à zéro.',
+        step1: 'Étape 1: Listez vos dettes du plus petit au plus grand.', step2: 'Étape 2: Payez les minimums sur toutes sauf la plus petite.', step3: 'Étape 3: Attaquez la plus petite avec tous les dollars supplémentaires.', step4: 'Étape 4: Répétez jusqu’à zéro.',
         vsAvalanche: 'Boule de Neige vs. Avalanche', vsDesc: 'La dynamique bat la mathématique parfaite à chaque fois.',
         termsTitle: 'Termes de Dette Expliqués (Simple !)', minPayTerm: 'Paiement Minimum', minPayDef: 'Le plus petit montant exigé par le prêteur.',
         balanceTerm: 'Solde', balanceDef: 'Montant que vous devez encore.', aprTerm: 'Taux d’Intérêt', aprDef: 'Coût de l’argent emprunté.',
@@ -339,10 +385,190 @@
         dfDateTerm: 'Fecha Libre de Deuda', dfDateDef: 'El día en que tu deuda de consumo llega a cero.',
         cta1Title: 'Corta tu Interés a la Mitad', cta1Text: 'Una tarjeta de transferencia al 0 % puede ahorrarte 1 000 €+', cta1Btn: '→ Comprueba si Calificas (2 min)',
         cta2Title: 'Reduce tu Pago Mensual', cta2Text: 'Consolida en un préstamo con tasa más baja', cta2Btn: '→ Ver Opciones (sin impacto crédito)'
+      },
+      de: {
+        addDebtTitle: 'Schulden hinzufügen', selectType: 'Schuldtyp wählen...', debtType: 'Schuldart', debtTypeTip: 'Was für eine Schuld ist das?',
+        balance: 'Restschuld', balanceTip: 'Wie viel schulden Sie noch?', apr: 'Zinssatz (APR)', aprTip: 'Jährlicher Satz auf Ihrer Abrechnung',
+        minPayment: 'Mindestzahlung', minPaymentTip: 'Kleinster monatlich geforderter Betrag', addDebtBtn: 'Schuld hinzufügen →',
+        yourDebts: 'Ihre Schulden', seeDateBtn: 'Mein schuldenfreies Datum anzeigen →', debtFreeDate: 'Ihr schuldenfreies Datum',
+        minOnly: 'Wenn Sie nur die Mindestbeträge weiterzahlen:', ifYouPay: 'Wenn Sie', extraEachMonth: 'extra pro Monat zahlen:',
+        boostText: 'Schuldenfrei – und zwar schneller? Natürlich!', boostLabel: 'Erhöhen Sie Ihre Raten und werden Sie schneller schuldenfrei!',
+        youLose: 'Bei nur Mindestzahlungen verlieren Sie:', netLoss: 'Nettoverlust nach Extra-Zahlungen:', savingPrefix: 'Sie sparen',
+        whatIsSnowball: 'Was ist die Schneeball-Methode?', snowballDesc: 'Eine einfache Methode, sich auf die Salden – nicht auf die Zinsen – zu konzentrieren.',
+        step1: 'Schritt 1: Schulden vom Kleinsten zum Größten auflisten.', step2: 'Schritt 2: Auf alle außer die Kleinsten nur Mindestzahlungen leisten.', step3: 'Schritt 3: Die Kleinste mit jedem Extra-Dollar angreifen.', step4: 'Schritt 4: Wiederholen, bis jede Schuld auf Null steht.',
+        vsAvalanche: 'Schneeball vs. Lawine', vsDesc: 'Schwung schlägt perfekte Mathematik – jedes Mal.',
+        termsTitle: 'Schuld-Begriffe einfach erklärt', minPayTerm: 'Mindestzahlung', minPayDef: 'Die kleinste vom Kreditgeber verlangte Rate.',
+        balanceTerm: 'Saldo', balanceDef: 'Betrag, den Sie noch schulden.', aprTerm: 'Zinssatz', balanceDef: 'Kosten des geliehenen Geldes.',
+        principalTerm: 'Kapitalschuld', balanceDef: 'Ursprünglich geliehener Betrag.', nonMortTerm: 'Nicht-Hypothekenschulden', nonMortDef: 'Alle Schulden außer dem Hauskredit.',
+        dfDateTerm: 'Schuldenfreies Datum', dfDateDef: 'Der Tag, an dem Ihre Konsumkredit-Schulden Null erreichen.',
+        cta1Title: 'Zinsen halbieren', cta1Text: 'Eine 0 %-Balance-Transfer-Karte kann 1.000 €+ sparen', cta1Btn: '→ Prüfen, ob Sie qualifizieren (2 Min.)',
+        cta2Title: 'Monatliche Rate senken', cta2Text: 'In einem Kredit mit niedrigerem Zins zusammenfassen', cta2Btn: '→ Optionen anzeigen (ohne Schufa-Eintrag)'
+      },
+      ja: {
+        addDebtTitle: '借金を追加', selectType: '借金の種類を選択...', debtType: '借金の種類', debtTypeTip: 'これはどんな借金ですか？',
+        balance: '残高', balanceTip: 'いくらまだ残っていますか？', apr: '金利（年率）', aprTip: '明細に記載されている年間利率',
+        minPayment: '最低返済額', minPaymentTip: '毎月支払う最小額', addDebtBtn: '借金を追加 →',
+        yourDebts: 'あなたの借金', seeDateBtn: '借金ゼロ日を見る →', debtFreeDate: '借金ゼロ日',
+        minOnly: '最低返済額のみ続けた場合:', ifYouPay: '毎月', extraEachMonth: '増額支払いした場合:',
+        boostText: 'もっと早く借金ゼロになりたいですよね！', boostLabel: '返済を増やしてさらに早く借金を返しましょう！',
+        youLose: '最低金だけ내면 잃게 될 금액:', netLoss: '増額後の純損失:', savingPrefix: '節約額',
+        whatIsSnowball: 'スノーボール方式とは？', snowballDesc: '残高に焦点を当てるシンプルな借金返済方法です。',
+        step1: 'ステップ1: 借金を小さい順に並べます。', step2: 'ステップ2: 最小以外に最低返済額を払います。', step3: 'ステップ3: 最小の借金に余ったお金を全部入れます。', step4: 'ステップ4: 残高ゼロまで繰り返します。',
+        vsAvalanche: 'スノーボール vs. アバランチ', vsDesc: '勢いが完璧な数学を打ち破ります。',
+        termsTitle: '借金用語を簡単解説', minPayTerm: '最低返済額', minPayDef: '貸し手が要求する最小の支払い金額。',
+        balanceTerm: '残高', balanceDef: 'まだ払っていない金額。', aprTerm: '金利', balanceDef: '借りたお金のコスト。',
+        principalTerm: '元本', balanceDef: '最初に借りた金額。', nonMortTerm: '住宅ローン以外の借金', nonMortDef: '住宅ローンを除くすべての借金。',
+        dfDateTerm: '借金ゼロ日', dfDateDef: '消費者借金が0になる日。',
+        cta1Title: '金利を半減', cta1Text: '0 %残高移行カードで10万円以上節約可能', cta1Btn: '→ 2分で資格をチェック',
+        cta2Title: '月々の返済を減らす', cta2Text: '低金利のローンにまとめて返済額をダウン', cta2Btn: '→ オプションを見る（信用記録に影響なし）'
+      },
+      it: {
+        addDebtTitle: 'Aggiungi un Debito', selectType: 'Seleziona tipo di debito...', debtType: 'Tipo di Debito', debtTypeTip: 'Che tipo di debito è?',
+        balance: 'Debito Residuo', balanceTip: 'Quanto devi ancora?', apr: 'Tasso di Interesse (TAEG)', aprTip: 'Tasso annuale indicato sulla fattura',
+        minPayment: 'Pagamento Minimo', minPaymentTip: 'Importo minimo richiesto ogni mese', addDebtBtn: 'Aggiungi Debito →',
+        yourDebts: 'I Tuoi Debiti', seeDateBtn: 'Vedi la Mia Data di Libertà →', debtFreeDate: 'La Tua Data di Libertà dai Debiti',
+        minOnly: 'Se continui a pagare solo i minimi:', ifYouPay: 'Se paghi', extraEachMonth: 'in più al mese:',
+        boostText: 'Vuoi essere libero dai debiti prima? Certo che sì!', boostLabel: 'Aumenta i pagamenti per saldare ancora più velocemente!',
+        youLose: 'Pagando solo i minimi perderai:', netLoss: 'Perdita netta dopo pagamenti extra:', savingPrefix: 'Risparmierai',
+        whatIsSnowball: 'Cos’è il Metodo Palla di Neve?', snowballDesc: 'Un modo semplice per concentrarsi sui saldi, non sui tassi.',
+        step1: 'Passo 1: elenca i debiti dal più piccolo al più grande.', step2: 'Passo 2: paga i minimi su tutti tranne che sul più piccolo.', step3: 'Passo 3: attacca il più piccolo con ogni euro extra.', step4: 'Passo 4: ripeti fino a zero.',
+        vsAvalanche: 'Palla di Neve vs. Valanga', vsDesc: 'La spinta batte la matematica perfetta, ogni volta.',
+        termsTitle: 'Termini sui Debiti Spiegati (Semplicemente!)', minPayTerm: 'Pagamento Minimo', minPayDef: 'La più piccola somma richiesta dal creditore.',
+        balanceTerm: 'Saldo', balanceDef: 'Somma che devi ancora.', aprTerm: 'Tasso di Interesse', balanceDef: 'Costo del denaro preso a prestito.',
+        principalTerm: 'Capitale', balanceDef: 'Importo originariamente prestato.', nonMortTerm: 'Debiti non-Ipotecari', nonMortDef: 'Tutti i debiti tranne il mutuo.',
+        dfDateTerm: 'Data di Libertà dai Debiti', dfDateDef: 'Il giorno in cui il debito di consumo raggiunge zero.',
+        cta1Title: 'Taglia gli Interessi a Metà', cta1Text: 'Una carta di trasferimento saldo al 0 % può farti risparmiare 1.000 €+', cta1Btn: '→ Controlla se Qualifichi (2 min)',
+        cta2Title: 'Riduci la Rata Mensile', cta2Text: 'Consolida in un unico prestito a tasso più basso', cta2Btn: '→ Vedi le Opzioni (nessun impatto sul credito)'
+      },
+      ko: {
+        addDebtTitle: '빚 추가', selectType: '빚 종류 선택...', debtType: '빚 유형', debtTypeTip: '어떤 빚인가요?',
+        balance: '잔여 잔액', balanceTip: '아직 얼마나 남았나요?', apr: '이자율 (연간)', aprTip: '청구서에 표시된 연 이자율',
+        minPayment: '최소 상환액', minPaymentTip: '매월 내야 하는 최소 금액', addDebtBtn: '빚 추가 →',
+        yourDebts: '당신의 빚', seeDateBtn: '빚 없는 날짜 보기 →', debtFreeDate: '빚 없는 날',
+        minOnly: '최소 상환액만 계속 낸다면:', ifYouPay: '매월', extraEachMonth: '추가로 낸다면:',
+        boostText: '빚을 더 빨리 없애고 싶나요? 당연하죠!', boostLabel: '상환액을 늘려 빚을 훨씬 빨리 갚으세요!',
+        youLose: '최소금만 내면 잃게 될 금액:', netLoss: '추가 상환 후 순손실:', savingPrefix: '절약액',
+        whatIsSnowball: '눈덩이 방식이란?', snowballDesc: '잔액에 집중하는 간단한 빚 상환 방법입니다.',
+        step1: '1단계: 빚을 작은 순서로 나열합니다.', step2: '2단계: 가장 작은 빚 제외 모두 최소 상환액만 냅니다.', step3: '3단계: 가장 작은 빚에 여분의 돈을 모두 넣습니다.', step4: '4단계: 잔액 0까지 반복합니다.',
+        vsAvalanche: '눈덩이 vs. 눈사태', vsDesc: '추진력이 완벽한 수학을 이깁니다.',
+        termsTitle: '빚 용어 쉽게 설명', minPayTerm: '최소 상환액', minPayDef: '대출 기관이 요구하는 최소 금액.',
+        balanceTerm: '잔액', balanceDef: '아직 갚지 않은 금액.', aprTerm: '이자율', balanceDef: '빌린 돈의 비용.',
+        principalTerm: '원금', balanceDef: '처음 빌린 금액.', nonMortTerm: '주택담보 외 빚', nonMortDef: '주택담보대출을 제외한 모든 빚.',
+        dfDateTerm: '빚 없는 날', dfDateDef: '소비자 빚이 0이 되는 날.',
+        cta1Title: '이자 반으로 줄이기', cta1Text: '0 % 잔액 이전 카드로 100 만원 이상 절약 가능', cta1Btn: '→ 2 분 만에 자격 확인',
+        cta2Title: '월 상환액 낮추기', cta2Text: '더 낮은 금리의 한도 대출로 통합', cta2Btn: '→ 옵션 보기 (신용도 영향 없음)'
+      },
+      cs: {
+        addDebtTitle: 'Přidat Dluh', selectType: 'Vyberte typ dluhu...', debtType: 'Typ Dluhu', debtTypeTip: 'O jaký dluh se jedná?',
+        balance: 'Zbývající Jistina', balanceTip: 'Kolik ještě dlužíte?', apr: 'Úroková Sazba (RPSN)', aprTip: 'Roční sazba uvedená ve výpisu',
+        minPayment: 'Minimální Splátka', minPaymentTip: 'Nejmenší požadovaná částka měsíčně', addDebtBtn: 'Přidat Dluh →',
+        yourDebts: 'Vaše Dluhy', seeDateBtn: 'Zobrazit Datum Bez Dluhů →', debtFreeDate: 'Vaše Datum Bez Dluhů',
+        minOnly: 'Pokud budete i nadále platit pouze minimální splátky:', ifYouPay: 'Pokud zaplatíte', extraEachMonth: 'navíc každý měsíc:',
+        boostText: 'Chcete být bez dluhů dřív? Samozřejmě!', boostLabel: 'Zvyšte splátky a splaťte dluhy ještě rychleji!',
+        youLose: 'Při pouze minimálních splátkách ztratíte:', netLoss: 'Čistá ztráta po mimořádných splátkách:', savingPrefix: 'Ušetříte',
+        whatIsSnowball: 'Co je Sněhová Koule?', snowballDesc: 'Jednoduchý způsob, jak se zaměřit na zůstatky, ne na úroky.',
+        step1: 'Krok 1: Seřaďte dluhy od nejmenšího po největší.', step2: 'Krok 2: Na všechny kromě nejmenšího plaťte minimum.', step3: 'Krok 3: Nejmenšího „zabijte“ každou korunou navíc.', step4: 'Krok 4: Opakujte, až vše dosáhne nuly.',
+        vsAvalanche: 'Sněhová Koule vs. Lavina', vsDesc: 'Hybnost vítězí nad dokonalým výpočtem – pokaždé.',
+        termsTitle: 'Pojmy o Dluhu Vysvětleny (Jednoduše!)', minPayTerm: 'Minimální Splátka', minPayDef: 'Nejmenší částka požadovaná věřitelem.',
+        balanceTerm: 'Zůstatek', balanceDef: 'Částka, kterou ještě dlužíte.', aprTerm: 'Úroková Sazba', balanceDef: 'Náklady na půjčené peníze.',
+        principalTerm: 'Jistina', balanceDef: 'Původně půjčená částka.', nonMortTerm: 'Nehypoteční Dluh', nonMortDef: 'Všechny dluhy kromě hypotéky.',
+        dfDateTerm: 'Datum Bez Dluhů', dfDateDef: 'Den, kdy spotřebitelské dluhy klesnou na nulu.',
+        cta1Title: 'Snížit Úroky o Polovinu', cta1Text: 'Karta s 0 % převodem zůstatku ušetří 20 000 Kč+', cta1Btn: '→ Zkontrolovat způsobilost (2 min)',
+        cta2Title: 'Snížit Měsíční Splátku', cta2Text: 'Konsolidujte do jedné půjčky s nižším úrokem', cta2Btn: '→ Zobrazit možnosti (bez vlivu na úvěr)'
       }
     };
 
-    /* ---------- 5.  debt CRUD ---------- */
+    /* ---------- 3.  helper functions (moved up) ---------- */
+    const monthOffset = (from, months) => {
+      const d = new Date(from); d.setMonth(d.getMonth() + months);
+      return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    };
+    function simulate(debts) {
+      let months = 0, totalInterest = 0, remaining = JSON.parse(JSON.stringify(debts));
+      while (remaining.some(d => d.balance > 0)) {
+        remaining.forEach(d => {
+          if (d.balance > 0) {
+            const interest = d.balance * (d.apr / 100) / 12;
+            const pay = Math.min(d.min_payment + (d.extra_payment || 0), d.balance + interest);
+            d.balance = Math.max(0, d.balance - (pay - interest));
+            totalInterest += interest;
+          }
+        }); months++;
+      }
+      return { months, interest: totalInterest };
+    }
+    function formatMoney(amount, symbol) {
+      return symbol + amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    /* ---------- 4.  core calculate (hoisted) ---------- */
+    let debtSnapshot = [], minInterest = 0, currentSymbol = '$';   // symbol added
+    async function calculate() {
+      const { data: debts } = await supabaseClient.from('debts').select('*');
+      if (!debts || !debts.length) { alert('Please add at least one debt first.'); return; }
+
+      const baseSave = simulate(debts);
+      minInterest = baseSave.interest;
+
+      const minDate = monthOffset(new Date(), baseSave.months);
+      document.getElementById('min-date').textContent = minDate;
+      document.getElementById('min-months').textContent = `${baseSave.months} months`;
+
+      /* show fixed loss with correct currency */
+      document.getElementById('loss-amount').textContent =
+        formatMoney(minInterest, currentSymbol);
+
+      debtSnapshot = JSON.parse(JSON.stringify(debts));
+
+      const slider = document.getElementById('extra-slider');
+      slider.value = 0;
+      slider.dispatchEvent(new Event('input'));
+
+      /* show card & CTAs ,  HIDE  EDU  SECTIONS  */
+      document.getElementById('results').classList.remove('hidden');
+      document.getElementById('cta-panel').classList.remove('hidden');
+      document.getElementById('edu-panel').classList.add('hidden');
+
+      // ↓↓↓  SMOOTH  SCROLL  to results  ↓↓↓
+      document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    /* ---------- 5.  slider live update + color switch + saving + net loss ---------- */
+    const slider = document.getElementById('extra-slider');
+    const extraVal = document.getElementById('extra-val');
+    const extraBox = document.getElementById('extra-box');
+    const newDateEl = document.getElementById('new-date');
+    const newMonthsEl = document.getElementById('new-months');
+    const savingEl = document.getElementById('saving-amount');
+    const netLossEl = document.getElementById('net-loss');
+
+    slider.addEventListener('input', () => {
+      const extra = parseInt(slider.value, 10);
+      extraVal.textContent = formatMoney(extra, currentSymbol);
+      if (extra === 0) {
+        extraBox.style.display = 'none';
+        extraBox.classList.remove('boost');
+        return;
+      }
+      extraBox.style.display = 'block';
+      extraBox.classList.add('boost');
+
+      const withExtra = debtSnapshot.map(d => ({ ...d, extra_payment: (d.extra_payment || 0) + extra }));
+      const res = simulate(withExtra);
+
+      newDateEl.textContent = monthOffset(new Date(), res.months);
+      newMonthsEl.textContent = `${res.months} months`;
+
+      //  LIVE  SAVING  AMOUNT  –  BLACK  &  BOLD
+      const saved = minInterest - res.interest;
+      savingEl.textContent = `${TEXTS[LOCALES[document.getElementById('country').value].lang].savingPrefix} ${formatMoney(saved, currentSymbol)}`;
+
+      //  LIVE  NET  LOSS  (lose − save)  →  drops  toward  zero
+      const net = minInterest - saved;
+      netLossEl.textContent = formatMoney(net, currentSymbol);
+    });
+
+    /* ---------- 6.  debt CRUD ---------- */
     async function addDebt() {
       const debt = {
         type: document.getElementById('debt-type').value,
@@ -375,14 +601,14 @@
       } else { list.classList.add('hidden'); }
     }
 
-    /* ---------- 6.  supabase client + initial load ---------- */
+    /* ---------- 7.  supabase client + initial load ---------- */
     const supabaseClient = supabase.createClient(
-      'https://gqgpjneoobcopymsvohx.supabase.co',
+      'https://gqgpjneoobcopymsvohx.supabase.co ',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxZ3BqbmVvb2Jjb3B5bXN2b2h4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1ODE2NzgsImV4cCI6MjA4MTE1NzY3OH0.j_URS7960PNFOrcDNaP-C3dxzXbCsPW1AfOmncV5A68'
     );
     loadDebts();
 
-    /* ---------- 7.  animated headline (nice-to-have) ---------- */
+    /* ---------- 8.  animated headline (nice-to-have) ---------- */
     const phrases = ['Calculator', 'Strategy', 'Timeline'];
     let idx = 0;
     setInterval(() => {
@@ -390,7 +616,7 @@
       document.getElementById('animated-text').textContent = phrases[idx];
     }, 3000);
 
-    /* ---------- 8.  language + currency switcher ---------- */
+    /* ---------- 9.  language + currency switcher ---------- */
     function formatMoney(amount, symbol) {
       return symbol + amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
