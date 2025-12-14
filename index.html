@@ -320,7 +320,7 @@
         principalTerm: 'Principal', principalDef: 'Montant initial emprunté.', nonMortTerm: 'Dette Non-Hypothécaire', nonMortDef: 'Toute dette sauf le prêt immobilier.',
         dfDateTerm: 'Date de Libération', dfDateDef: 'Le jour où votre dette consommation atteint zéro.',
         cta1Title: 'Réduisez votre Intérêt de Moitié', cta1Text: 'Une carte de transfert à 0 % peut vous faire économiser 1 000 €+', cta1Btn: '→ Vérifiez si vous Qualifiez (2 min)',
-        cta2Title: 'Réduisez votre Mensualité', cta2Text: 'Regroupez en un prêt à taux plus bas', cta2Btn: '→ Voir les Options (sans impact crédit)'
+        cta2Title: 'Réduisez votre Mensualité', cta2Text: 'Regroupez en un prêt à taux plus bas', cta2Btn: '→ Voir Options (sans impact crédit)'
       },
       es: {
         addDebtTitle: 'Añadir una Deuda', selectType: 'Selecciona tipo de deuda...', debtType: 'Tipo de Deuda', debtTypeTip: '¿Qué tipo de deuda es ésta?',
@@ -342,74 +342,7 @@
       }
     };
 
-    /* ---------- 2.  core calculate (hoisted) ---------- */
-    let debtSnapshot = [], minInterest = 0, currentSymbol = '$';   // symbol added
-    async function calculate() {
-      const { data: debts } = await supabaseClient.from('debts').select('*');
-      if (!debts || !debts.length) { alert('Please add at least one debt first.'); return; }
-
-      const baseSave = simulate(debts);
-      minInterest = baseSave.interest;
-
-      const minDate = monthOffset(new Date(), baseSave.months);
-      document.getElementById('min-date').textContent = minDate;
-      document.getElementById('min-months').textContent = `${baseSave.months} months`;
-
-      /* show fixed loss with correct currency */
-      document.getElementById('loss-amount').textContent =
-        formatMoney(minInterest, currentSymbol);
-
-      debtSnapshot = JSON.parse(JSON.stringify(debts));
-
-      const slider = document.getElementById('extra-slider');
-      slider.value = 0;
-      slider.dispatchEvent(new Event('input'));
-
-      /* show card & CTAs ,  HIDE  EDU  SECTIONS  */
-      document.getElementById('results').classList.remove('hidden');
-      document.getElementById('cta-panel').classList.remove('hidden');
-      document.getElementById('edu-panel').classList.add('hidden');
-
-      // ↓↓↓  SMOOTH  SCROLL  to results  ↓↓↓
-      document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    /* ---------- 3.  slider live update + color switch + saving + net loss ---------- */
-    const slider = document.getElementById('extra-slider');
-    const extraVal = document.getElementById('extra-val');
-    const extraBox = document.getElementById('extra-box');
-    const newDateEl = document.getElementById('new-date');
-    const newMonthsEl = document.getElementById('new-months');
-    const savingEl = document.getElementById('saving-amount');
-    const netLossEl = document.getElementById('net-loss');
-
-    slider.addEventListener('input', () => {
-      const extra = parseInt(slider.value, 10);
-      extraVal.textContent = formatMoney(extra, currentSymbol);
-      if (extra === 0) {
-        extraBox.style.display = 'none';
-        extraBox.classList.remove('boost');
-        return;
-      }
-      extraBox.style.display = 'block';
-      extraBox.classList.add('boost');
-
-      const withExtra = debtSnapshot.map(d => ({ ...d, extra_payment: (d.extra_payment || 0) + extra }));
-      const res = simulate(withExtra);
-
-      newDateEl.textContent = monthOffset(new Date(), res.months);
-      newMonthsEl.textContent = `${res.months} months`;
-
-      //  LIVE  SAVING  AMOUNT  –  BLACK  &  BOLD
-      const saved = minInterest - res.interest;
-      savingEl.textContent = `${TEXTS[LOCALES[document.getElementById('country').value].lang].savingPrefix} ${formatMoney(saved, currentSymbol)}`;
-
-      //  LIVE  NET  LOSS  (lose − save)  →  drops  toward  zero
-      const net = minInterest - saved;
-      netLossEl.textContent = formatMoney(net, currentSymbol);
-    });
-
-    /* ---------- 4.  debt CRUD ---------- */
+    /* ---------- 5.  debt CRUD ---------- */
     async function addDebt() {
       const debt = {
         type: document.getElementById('debt-type').value,
@@ -442,14 +375,14 @@
       } else { list.classList.add('hidden'); }
     }
 
-    /* ---------- 5.  supabase client + initial load ---------- */
+    /* ---------- 6.  supabase client + initial load ---------- */
     const supabaseClient = supabase.createClient(
       'https://gqgpjneoobcopymsvohx.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxZ3BqbmVvb2Jjb3B5bXN2b2h4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1ODE2NzgsImV4cCI6MjA4MTE1NzY3OH0.j_URS7960PNFOrcDNaP-C3dxzXbCsPW1AfOmncV5A68'
     );
     loadDebts();
 
-    /* ---------- 6.  animated headline (nice-to-have) ---------- */
+    /* ---------- 7.  animated headline (nice-to-have) ---------- */
     const phrases = ['Calculator', 'Strategy', 'Timeline'];
     let idx = 0;
     setInterval(() => {
@@ -457,7 +390,7 @@
       document.getElementById('animated-text').textContent = phrases[idx];
     }, 3000);
 
-    /* ---------- 7.  language + currency switcher ---------- */
+    /* ---------- 8.  language + currency switcher ---------- */
     function formatMoney(amount, symbol) {
       return symbol + amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
