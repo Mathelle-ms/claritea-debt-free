@@ -46,7 +46,6 @@
     .result-box .label{font-size:.95rem;color:#475569;margin-bottom:.5rem}
     .result-box .date{font-size:1.75rem;font-weight:700;color:#1e293b}
     .result-box .months{font-size:.9rem;color:#64748b}
-    .boost{font-weight:600;font-size:1.1rem;margin-bottom:.5rem;color:#1e40af}
     /*  GREEN  TEXT  */
     .boost-green{color:#16a34a;font-weight:600;font-size:1.1rem;margin-bottom:.5rem}
     .slider-box{margin:1.5rem 0}
@@ -98,7 +97,7 @@
     }
     .cta-green a:hover{text-decoration:underline}
 
-    /*  EDU  SECTIONS  –  HIDDEN  WHEN  RESULTS  SHOW  */
+    /*  EDU  SECTIONS  –  WILL  BE  HIDDEN  AFTER  RESULTS  */
     .edu-section{background:#fff;padding:2rem;margin:2rem 0;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
     .edu-section h2{color:#1e40af;margin-bottom:1rem;font-size:1.8rem}
     .edu-section h3{color:#1e293b;margin:1.5rem 0 .5rem 0;font-size:1.3rem}
@@ -131,7 +130,8 @@
         <select id="debt-type">
           <option value="">Select debt type...</option>
           <option>Car Loan</option><option>Student Loan</option><option>Credit Card</option>
-          <option>Other Debt</option><option>Home Mortgage</option>
+          <option>Other Debt</option>
+          <!--  HOME  MORTGAGE  REMOVED  -->
         </select>
       </div>
       <div class="form-group">
@@ -146,10 +146,7 @@
         <label>Minimum Payment <span class="tooltip">i<span class="tooltiptext">Smallest amount required monthly</span></span></label>
         <input id="min-payment" type="number" placeholder="e.g., 100">
       </div>
-      <div class="form-group">
-        <label>Extra Monthly Payment (Optional) <span class="tooltip">i<span class="tooltiptext">Pay extra to finish faster</span></span></label>
-        <input id="extra-payment" type="number" placeholder="e.g., 50">
-      </div>
+      <!--  EXTRA  MONTHLY  PAYMENT  FIELD  REMOVED  -->
 
       <!--  ADD DEBT  -->
       <button class="btn" onclick="addDebt()">Add Debt →</button>
@@ -186,9 +183,9 @@
         <div class="slider-box" id="slider-box">
           <p class="boost-green">Want to be debt-free sooner? Of course you do!</p>
           <label>Boost your payments to pay off your debt even faster!</label>
-          <input type="range" id="extra-slider" min="0" max="1000" step="25" value="0">
+          <input type="range" id="extra-slider" min="0" max="10000" step="25" value="0">
           <div class="slider-labels">
-            <span>$0</span><span>$250</span><span>$500</span><span>$750</span><span>$1,000</span>
+            <span>$0</span><span>$2.5k</span><span>$5k</span><span>$7.5k</span><span>$10k</span>
           </div>
         </div>
 
@@ -240,4 +237,120 @@
   </div>
 
   <!--  SUPABASE + SCRIPTS  -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    /* ---------- 1.  small helpers ---------- */
+    const monthOffset = (from, months) => {
+      const d = new Date(from); d.setMonth(d.getMonth() + months);
+      return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    };
+    function simulate(debts) {
+      let months = 0, totalInterest = 0, remaining = JSON.parse(JSON.stringify(debts));
+      while (remaining.some(d => d.balance > 0)) {
+        remaining.forEach(d => {
+          if (d.balance > 0) {
+            const interest = d.balance * (d.apr / 100) / 12;
+            const pay = Math.min(d.min_payment + (d.extra_payment || 0), d.balance + interest);
+            d.balance = Math.max(0, d.balance - (pay - interest));
+            totalInterest += interest;
+          }
+        }); months++;
+      }
+      return { months, interest: totalInterest };
+    }
+
+    /* ---------- 2.  core calculate (hoisted) ---------- */
+    let debtSnapshot = [];
+    async function calculate() {
+      const { data: debts } = await supabaseClient.from('debts').select('*');
+      if (!debts || !debts.length) { alert('Please add at least one debt first.'); return; }
+
+      /* fill NEW header card + prep for slider */
+      debtSnapshot = JSON.parse(JSON.stringify(debts));
+      const base = simulate(debts);
+      const minDate = monthOffset(new Date(), base.months);
+      document.getElementById('min-date').textContent = minDate;
+      document.getElementById('min-months').textContent = `${base.months} months`;
+
+      const slider = document.getElementById('extra-slider');
+      slider.value = 0;
+      slider.dispatchEvent(new Event('input'));
+
+      /* show card & CTAs ,  HIDE  EDU  SECTIONS  */
+      document.getElementById('results').classList.remove('hidden');
+      document.getElementById('cta-panel').classList.remove('hidden');
+      document.getElementById('edu-panel').classList.add('hidden');   //  ←  ADD  THIS  LINE
+    }
+
+    /* ---------- 3.  slider live update + color switch ---------- */
+    const slider = document.getElementById('extra-slider');
+    const extraVal = document.getElementById('extra-val');
+    const extraBox = document.getElementById('extra-box');
+    const newDateEl = document.getElementById('new-date');
+    const newMonthsEl = document.getElementById('new-months');
+    slider.addEventListener('input', () => {
+      const extra = parseInt(slider.value, 10);
+      extraVal.textContent = `$${extra.toLocaleString()}`;
+      if (extra === 0) {
+        extraBox.style.display = 'none';
+        extraBox.classList.remove('boost');
+        return;
+      }
+      extraBox.style.display = 'block';
+      extraBox.classList.add('boost');
+      const withExtra = debtSnapshot.map(d => ({ ...d, extra_payment: (d.extra_payment || 0) + extra }));
+      const res = simulate(withExtra);
+      newDateEl.textContent = monthOffset(new Date(), res.months);
+      newMonthsEl.textContent = `${res.months} months`;
+    });
+
+    /* ---------- 4.  debt CRUD ---------- */
+    async function addDebt() {
+      const debt = {
+        type: document.getElementById('debt-type').value,
+        balance: parseFloat(document.getElementById('balance').value),
+        apr: parseFloat(document.getElementById('apr').value),
+        min_payment: parseFloat(document.getElementById('min-payment').value),
+        extra_payment: 0   //  no longer collected from form
+      };
+      if (!debt.type || isNaN(debt.balance) || isNaN(debt.apr) || isNaN(debt.min_payment)) {
+        alert('Please fill in all required fields.'); return;
+      }
+      await supabaseClient.from('debts').insert([debt]);
+      loadDebts();
+    }
+    async function deleteDebt(id) {
+      await supabaseClient.from('debts').delete().eq('id', id);
+      loadDebts();
+    }
+    async function loadDebts() {
+      const { data } = await supabaseClient.from('debts').select('*');
+      const list = document.getElementById('debt-list');
+      const container = document.getElementById('debts');
+      if (data && data.length) {
+        list.classList.remove('hidden');
+        container.innerHTML = data.map(d => `
+          <div class="debt-item">
+            <span>${d.type}: $${d.balance.toFixed(2)} at ${d.apr}%</span>
+            <button class="btn-delete" onclick="deleteDebt(${d.id})">Delete</button>
+          </div>`).join('');
+      } else { list.classList.add('hidden'); }
+    }
+
+    /* ---------- 5.  supabase client + initial load ---------- */
+    const supabaseClient = supabase.createClient(
+      'https://gqgpjneoobcopymsvohx.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxZ3BqbmVvb2Jjb3B5bXN2b2h4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1ODE2NzgsImV4cCI6MjA4MTE1NzY3OH0.j_URS7960PNFOrcDNaP-C3dxzXbCsPW1AfOmncV5A68'
+    );
+    loadDebts();
+
+    /* ---------- 6.  animated headline (nice-to-have) ---------- */
+    const phrases = ['Calculator', 'Strategy', 'Timeline'];
+    let idx = 0;
+    setInterval(() => {
+      idx = (idx + 1) % phrases.length;
+      document.getElementById('animated-text').textContent = phrases[idx];
+    }, 3000);
+  </script>
+</body>
+</html>
