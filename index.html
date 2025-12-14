@@ -78,6 +78,14 @@
       color:#1e293b;
     }
 
+    /*  SAVING  AMOUNT  –  BLACK  &  BOLD  */
+    .saving{
+      font-size:.9rem;
+      color:#000;          /* black */
+      font-weight:700;     /* bold */
+      margin-top:.4rem;
+    }
+
     /*  CTA  –  SAME  GREEN  */
     .cta-green{
       background:#86efac;
@@ -177,6 +185,7 @@
             <div class="label">If you pay <strong id="extra-val">$0</strong> extra each month:</div>
             <div class="date" id="new-date">—</div>
             <div class="months" id="new-months">—</div>
+            <div class="saving" id="saving-amount">You’ll save $0</div>
           </div>
         </div>
 
@@ -260,17 +269,20 @@
     }
 
     /* ---------- 2.  core calculate (hoisted) ---------- */
-    let debtSnapshot = [];
+    let debtSnapshot = [], minInterest = 0;   // minInterest added
     async function calculate() {
       const { data: debts } = await supabaseClient.from('debts').select('*');
       if (!debts || !debts.length) { alert('Please add at least one debt first.'); return; }
 
-      /* fill NEW header card + prep for slider */
-      debtSnapshot = JSON.parse(JSON.stringify(debts));
-      const base = simulate(debts);
-      const minDate = monthOffset(new Date(), base.months);
+      /* store minimum-interest once for saving calc */
+      const baseSave = simulate(debts);
+      minInterest = baseSave.interest;                 //  ←  NEW
+
+      const minDate = monthOffset(new Date(), baseSave.months);
       document.getElementById('min-date').textContent = minDate;
-      document.getElementById('min-months').textContent = `${base.months} months`;
+      document.getElementById('min-months').textContent = `${baseSave.months} months`;
+
+      debtSnapshot = JSON.parse(JSON.stringify(debts));
 
       const slider = document.getElementById('extra-slider');
       slider.value = 0;
@@ -285,12 +297,14 @@
       document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    /* ---------- 3.  slider live update + color switch ---------- */
+    /* ---------- 3.  slider live update + color switch + saving ---------- */
     const slider = document.getElementById('extra-slider');
     const extraVal = document.getElementById('extra-val');
     const extraBox = document.getElementById('extra-box');
     const newDateEl = document.getElementById('new-date');
     const newMonthsEl = document.getElementById('new-months');
+    const savingEl = document.getElementById('saving-amount');
+
     slider.addEventListener('input', () => {
       const extra = parseInt(slider.value, 10);
       extraVal.textContent = `$${extra.toLocaleString()}`;
@@ -301,10 +315,16 @@
       }
       extraBox.style.display = 'block';
       extraBox.classList.add('boost');
+
       const withExtra = debtSnapshot.map(d => ({ ...d, extra_payment: (d.extra_payment || 0) + extra }));
       const res = simulate(withExtra);
+
       newDateEl.textContent = monthOffset(new Date(), res.months);
       newMonthsEl.textContent = `${res.months} months`;
+
+      //  LIVE  SAVING  AMOUNT  –  BLACK  &  BOLD
+      const saved = minInterest - res.interest;
+      savingEl.textContent = `You’ll save $${saved.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     });
 
     /* ---------- 4.  debt CRUD ---------- */
