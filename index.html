@@ -9,8 +9,8 @@
     .container{max-width:900px;margin:0 auto;padding:0 1rem}
 
     /*  BANNER  */
-    .banner{background:linear-gradient(rgba(30,64,175,.85),rgba(30,64,175,.85)),url(https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=1200&h=400&fit=crop ) center/cover;color:#fff;padding:4rem 1rem;text-align:center;position:relative;overflow:hidden}
-    .wave{position:absolute;bottom:0;left:0;width:200%;height:70px;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg " viewBox="0 0 1200 70"><path fill="%23ffffff" fill-opacity="0.35" d="M0,35 C200,0 400,70 600,35 C800,0 1000,70 1200,35 L1200,70 L0,70 Z"/></svg>') 0 0/600px 70px;animation:waveMove 8s linear infinite}
+    .banner{background:linear-gradient(rgba(30,64,175,.85),rgba(30,64,175,.85)),url(https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=1200&h=400&fit=crop) center/cover;color:#fff;padding:4rem 1rem;text-align:center;position:relative;overflow:hidden}
+    .wave{position:absolute;bottom:0;left:0;width:200%;height:70px;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 70"><path fill="%23ffffff" fill-opacity="0.35" d="M0,35 C200,0 400,70 600,35 C800,0 1000,70 1200,35 L1200,70 L0,70 Z"/></svg>') 0 0/600px 70px;animation:waveMove 8s linear infinite}
     @keyframes waveMove{0%{transform:translateX(0)}100%{transform:translateX(-600px)}}
     .banner h1{font-size:2.5rem;margin-bottom:.5rem;letter-spacing:-.5px;animation:textDrop .8s ease-out .3s both}
     .banner p{font-size:1.1rem;opacity:.9;max-width:600px;margin:0 auto;animation:textFadeUp .8s ease-out .6s both}
@@ -19,9 +19,10 @@
     @keyframes textDrop{from{transform:translateY(-20px);opacity:0}to{transform:translateY(0);opacity:1}}
     @keyframes textFadeUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:.9}}
 
-    /*  COUNTRY  PICKER  */
-    .country-bar{background:#eef2ff;padding:1rem;text-align:center;font-size:1rem}
-    .country-bar select{padding:.5rem 1rem;font-size:1rem;border-radius:6px;border:2px solid #1e40af;background:#fff;color:#1e293b;cursor:pointer;font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif}
+    /*  COUNTRY  PICKER  –  BANNER-YELLOW  +  BLACK  BOLD  LABEL  */
+    .country-bar{background:#fbbf24;padding:1.5rem 1rem;text-align:center;font-size:1rem}
+    .country-bar label{font-weight:700;margin-right:.5rem;color:#000}
+    .country-bar select{padding:.6rem 1.2rem;font-size:1rem;border-radius:8px;border:2px solid #1e40af;background:#fff;color:#1e293b;cursor:pointer;font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;min-width:240px}
 
     /*  TOOLTIP  */
     .tooltip{position:relative;display:inline-block;margin-left:.4rem;width:18px;height:18px;background:#1e40af;color:#fff;border-radius:50%;text-align:center;line-height:18px;font-size:.75rem;cursor:help;vertical-align:middle}
@@ -50,7 +51,6 @@
     .result-box .label{font-size:.95rem;color:#475569;margin-bottom:.5rem}
     .result-box .date{font-size:1.75rem;font-weight:700;color:#1e293b}
     .result-box .months{font-size:.9rem;color:#64748b}
-    /*  GREEN  TEXT  */
     .boost-green{color:#16a34a;font-weight:600;font-size:1.1rem;margin-bottom:.5rem}
     .slider-box{margin:1.5rem 0}
     #extra-slider{width:100%;margin:.5rem 0}
@@ -59,54 +59,21 @@
     @media(max-width:600px){.result-row,.plan-grid{grid-template-columns:1fr}}
 
     /*  BLUE  main owed box  */
-    .result-box.main{
-      background:#1e40af;
-      color:#fff;
-      border-color:#1e40af;
-    }
-    .result-box.main .label,
-    .result-box.main .date,
-    .result-box.main .months{
-      color:#fff;
-    }
+    .result-box.main{background:#1e40af;color:#fff;border-color:#1e40af}
+    .result-box.main .label,.result-box.main .date,.result-box.main .months{color:#fff}
 
     /*  LIGHT-GREEN  when slider > 0  */
-    .result-box.boost{
-      background:#86efac;
-      color:#1e293b;
-      border-color:#86efac;
-    }
-    .result-box.boost .label,
-    .result-box.boost .date,
-    .result-box.boost .months{
-      color:#1e293b;
-    }
+    .result-box.boost{background:#86efac;color:#1e293b;border-color:#86efac}
+    .result-box.boost .label,.result-box.boost .date,.result-box.boost .months{color:#1e293b}
 
     /*  SAVING  AMOUNT  –  BLACK  &  BOLD  */
-    .saving{
-      font-size:.9rem;
-      color:#000;          /* black */
-      font-weight:700;     /* bold */
-      margin-top:.4rem;
-    }
+    .saving{font-size:.9rem;color:#000;font-weight:700;margin-top:.4rem}
 
     /*  CTA  –  SAME  GREEN  STYLE  */
-    .cta-green{
-      background:#86efac;
-      color:#1e293b;
-      padding:1rem;
-      text-align:center;
-      border-radius:8px;
-      margin:1rem 0;
-      font-weight:600;
-    }
+    .cta-green{background:#86efac;color:#1e293b;padding:1rem;text-align:center;border-radius:8px;margin:1rem 0;font-weight:600}
     .cta-green h3{margin-bottom:.5rem;font-size:1.1rem}
     .cta-green p{margin-bottom:.5rem;font-size:.9rem}
-    .cta-green a{
-      color:#1e293b;
-      text-decoration:none;
-      font-weight:700;
-    }
+    .cta-green a{color:#1e293b;text-decoration:none;font-weight:700}
     .cta-green a:hover{text-decoration:underline}
 
     /*  EDU  SECTIONS  –  WILL  BE  HIDDEN  AFTER  RESULTS  */
@@ -133,63 +100,37 @@
   </div>
 
   <!--  COUNTRY  PICKER  -->
- <!--  COUNTRY  PICKER  –  BANNER-YELLOW  +  BLACK  BOLD  LABEL  -->
-<style>
-  .country-bar{
-    background:#fbbf24;            /* same yellow as banner headline */
-    padding:1.5rem 1rem;
-    text-align:center;
-    font-size:1rem;
-  }
-  .country-bar label{
-    font-weight:700;               /* bold */
-    margin-right:.5rem;
-    color:#000000;               /* black text */
-  }
-  .country-bar select{
-    padding:.6rem 1.2rem;
-    font-size:1rem;
-    border-radius:8px;
-    border:2px solid #1e40af;
-    background:#fff;
-    color:#1e293b;
-    cursor:pointer;
-    font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;
-    min-width:240px;
-  }
-</style>
-
-<div class="country-bar">
-  <label for="country">Choose your country:</label>
-  <select id="country" onchange="switchCountry(this.value)">
-    <option value="US">🇺🇸 United States</option>
-    <option value="AE">🇦🇪 United Arab Emirates</option>
-    <option value="AT">🇦🇹 Austria</option>
-    <option value="AU">🇦🇺 Australia</option>
-    <option value="BE">🇧🇪 Belgium</option>
-    <option value="CA">🇨🇦 Canada</option>
-    <option value="CH">🇨🇭 Switzerland</option>
-    <option value="CZ">🇨🇿 Czech Republic</option>
-    <option value="DE">🇩🇪 Germany</option>
-    <option value="DK">🇩🇰 Denmark</option>
-    <option value="ES">🇪🇸 Spain</option>
-    <option value="FI">🇫🇮 Finland</option>
-    <option value="FR">🇫🇷 France</option>
-    <option value="GB">🇬🇧 United Kingdom</option>
-    <option value="HT">🇭🇹 Haiti</option>
-    <option value="IE">🇮🇪 Ireland</option>
-    <option value="IS">🇮🇸 Iceland</option>
-    <option value="IT">🇮🇹 Italy</option>
-    <option value="JP">🇯🇵 Japan</option>
-    <option value="KR">🇰🇷 South Korea</option>
-    <option value="LU">🇱🇺 Luxembourg</option>
-    <option value="NL">🇳🇱 Netherlands</option>
-    <option value="NO">🇳🇴 Norway</option>
-    <option value="QA">🇶🇦 Qatar</option>
-    <option value="SE">🇸🇪 Sweden</option>
-    <option value="SG">🇸🇬 Singapore</option>
-  </select>
-</div>
+  <div class="country-bar">
+    <label for="country">Choose your country:</label>
+    <select id="country" onchange="switchCountry(this.value)">
+      <option value="US">🇺🇸 United States</option>
+      <option value="AE">🇦🇪 United Arab Emirates</option>
+      <option value="AT">🇦🇹 Austria</option>
+      <option value="AU">🇦🇺 Australia</option>
+      <option value="BE">🇧🇪 Belgium</option>
+      <option value="CA">🇨🇦 Canada</option>
+      <option value="CH">🇨🇭 Switzerland</option>
+      <option value="CZ">🇨🇿 Czech Republic</option>
+      <option value="DE">🇩🇪 Germany</option>
+      <option value="DK">🇩🇰 Denmark</option>
+      <option value="ES">🇪🇸 Spain</option>
+      <option value="FI">🇫🇮 Finland</option>
+      <option value="FR">🇫🇷 France</option>
+      <option value="GB">🇬🇧 United Kingdom</option>
+      <option value="HT">🇭🇹 Haiti</option>
+      <option value="IE">🇮🇪 Ireland</option>
+      <option value="IS">🇮🇸 Iceland</option>
+      <option value="IT">🇮🇹 Italy</option>
+      <option value="JP">🇯🇵 Japan</option>
+      <option value="KR">🇰🇷 South Korea</option>
+      <option value="LU">🇱🇺 Luxembourg</option>
+      <option value="NL">🇳🇱 Netherlands</option>
+      <option value="NO">🇳🇴 Norway</option>
+      <option value="QA">🇶🇦 Qatar</option>
+      <option value="SE">🇸🇪 Sweden</option>
+      <option value="SG">🇸🇬 Singapore</option>
+    </select>
+  </div>
 
   <div class="container">
 
@@ -203,7 +144,6 @@
           <option value="" data-i18n="selectType">Select debt type...</option>
           <option>Car Loan</option><option>Student Loan</option><option>Credit Card</option>
           <option>Other Debt</option>
-          <!--  HOME  MORTGAGE  REMOVED  -->
         </select>
       </div>
       <div class="form-group">
@@ -221,7 +161,6 @@
         <span class="tooltip">i<span class="tooltiptext" data-i18n="minPaymentTip">Smallest amount required monthly</span></span>
         <input id="min-payment" type="number" placeholder="e.g., 100">
       </div>
-      <!--  EXTRA  MONTHLY  PAYMENT  FIELD  REMOVED  -->
 
       <!--  ADD DEBT  -->
       <button class="btn" onclick="addDebt()"><span data-i18n="addDebtBtn">Add Debt →</span></button>
@@ -286,12 +225,12 @@
       <div class="cta-green">
         <h3>💳 <span data-i18n="cta1Title">Cut Your Interest in Half</span></h3>
         <p data-i18n="cta1Text">A 0% balance-transfer card could save you $1,000+</p>
-        <a href="https://credible.com/your-affiliate-link " target="_blank" data-i18n="cta1Btn">→ Check If You Qualify (Takes 2 Minutes)</a>
+        <a href="https://credible.com/your-affiliate-link" target="_blank" data-i18n="cta1Btn">→ Check If You Qualify (Takes 2 Minutes)</a>
       </div>
       <div class="cta-green">
         <h3>💰 <span data-i18n="cta2Title">Lower Your Monthly Payment</span></h3>
         <p data-i18n="cta2Text">Consolidate into one loan with a lower rate</p>
-        <a href="https://www.lendingtree.com/your-affiliate-link " target="_blank" data-i18n="cta2Btn">→ See Your Options (No Impact on Credit)</a>
+        <a href="https://www.lendingtree.com/your-affiliate-link" target="_blank" data-i18n="cta2Btn">→ See Your Options (No Impact on Credit)</a>
       </div>
     </div>
 
@@ -325,7 +264,7 @@
   </div>
 
   <!--  SUPABASE + SCRIPTS  -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2 "></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     /* ---------- 1.  locale map : language + currency ---------- */
     const LOCALES = {
@@ -446,7 +385,7 @@
         principalTerm: '元本', balanceDef: '最初に借りた金額。', nonMortTerm: '住宅ローン以外の借金', nonMortDef: '住宅ローンを除くすべての借金。',
         dfDateTerm: '借金ゼロ日', dfDateDef: '消費者借金が0になる日。',
         cta1Title: '金利を半減', cta1Text: '0 %残高移行カードで10万円以上節約可能', cta1Btn: '→ 2分で資格をチェック',
-        cta2Title: '月々の返済を減らす', cta2Text: '低金利のローンにまとめて返済額をダウン', cta2Btn: '→ オプションを見る（信用記録に影響なし）'
+        cta2Title: '월 상환액 낮추기', cta2Text: '더 낮은 금리의 한도 대출로 통합', cta2Btn: '→ 옵션 보기 (신용도 영향 없음)'
       },
       it: {
         addDebtTitle: 'Aggiungi un Debito', selectType: 'Seleziona tipo di debito...', debtType: 'Tipo di Debito', debtTypeTip: 'Che tipo di debito è?',
@@ -629,20 +568,16 @@
 
     /* ---------- 7.  supabase client + initial load ---------- */
     const supabaseClient = supabase.createClient(
-      'https://gqgpjneoobcopymsvohx.supabase.co ',
+      'https://gqgpjneoobcopymsvohx.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxZ3BqbmVvb2Jjb3B5bXN2b2h4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1ODE2NzgsImV4cCI6MjA4MTE1NzY3OH0.j_URS7960PNFOrcDNaP-C3dxzXbCsPW1AfOmncV5A68'
     );
     loadDebts();
 
-<!-- ---------- 8-b.  AUTO-CLEAR  PREVIOUS  DEBTS  ---------- -->
-<script>
-(async () => {
-  // 1. delete every row in the remote table
-  await supabaseClient.from('debts').delete().neq('id', 0);
-  // 2. show empty list
-  loadDebts();
-})();
-</script>
+    /* ---------- 8-b.  AUTO-CLEAR  PREVIOUS  DEBTS  ---------- */
+    (async () => {
+      await supabaseClient.from('debts').delete().neq('id', 0);
+      loadDebts();
+    })();
 
     /* ---------- 8.  animated headline (nice-to-have) ---------- */
     const phrases = ['Calculator', 'Strategy', 'Timeline'];
@@ -659,18 +594,14 @@
     function switchCountry(code) {
       const loc = LOCALES[code];
       currentSymbol = loc.symbol;
-      // translate all [data-i18n] elements
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (TEXTS[loc.lang][key]) el.textContent = TEXTS[loc.lang][key];
       });
-      // re-render debt list with new currency
       loadDebts();
-      // if results are open, re-render them
       const results = document.getElementById('results');
       if (!results.classList.contains('hidden')) calculate();
     }
-    // init on load
     switchCountry('US');
   </script>
 </body>
